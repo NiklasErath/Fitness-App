@@ -70,6 +70,10 @@ dependencies {
     // Kotlin coroutines for Flow and LiveData
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
+
+    implementation("androidx.room:room-runtime:2.5.0")  // Use the latest Room version
 
 
     //debug
