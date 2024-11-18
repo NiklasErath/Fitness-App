@@ -28,19 +28,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.1" // Keep this as is if compatible
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -49,34 +54,35 @@ android {
 }
 
 dependencies {
-    //Core libraries
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    //Jetpack compose
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    // Core libraries
+    implementation(libs.androidx.core.ktx) // Core KTX utilities
+    implementation(libs.androidx.lifecycle.runtime.ktx) // Lifecycle runtime KTX
+    implementation(libs.androidx.activity.compose) // Compose integration with Activity
 
-    //Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.4")
-    //Lifecycle components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    //Corroutines
+    // Jetpack Compose
+    implementation(platform(libs.androidx.compose.bom)) // BOM for Compose
+    implementation(libs.androidx.ui) // Jetpack Compose UI
+    implementation(libs.androidx.ui.graphics) // Compose graphics support
+    implementation(libs.androidx.ui.tooling.preview) // Compose preview
+    implementation(libs.androidx.material3) // Material 3 UI components
+
+    // Navigation for Compose
+    implementation("androidx.navigation:navigation-compose:2.7.4") // Jetpack Compose navigation
+
+    // Lifecycle components for ViewModel and LiveData
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2") // ViewModel KTX
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2") // LiveData KTX
 
     // Kotlin coroutines for Flow and LiveData
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    implementation(libs.androidx.room.common)
-    implementation(libs.androidx.room.ktx)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4") // Coroutines core
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4") // Coroutines for Android
 
-    implementation("androidx.room:room-runtime:2.5.0")  // Use the latest Room version
+    // Room for database operations
+    implementation(libs.androidx.room.common) // Room core dependencies
+    implementation(libs.androidx.room.ktx) // Room KTX extensions
+    implementation("androidx.room:room-runtime:2.5.0") // Room runtime (latest stable)
 
-
-    //debug
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // Debugging libraries
+    debugImplementation(libs.androidx.ui.tooling) // Jetpack Compose tooling for debugging
+    debugImplementation(libs.androidx.ui.test.manifest) // Jetpack Compose testing manifest
 }
