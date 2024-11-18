@@ -1,3 +1,5 @@
+package edu.cc231030.MC.project.data.db
+
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -24,6 +26,7 @@ abstract class ExerciseDatabase : RoomDatabase() {
                     .fallbackToDestructiveMigration() // Automatically handles migrations
                     .build()
                 INSTANCE = instance
+                println("Databse success")
                 return instance
             }
         }

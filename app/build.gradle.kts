@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-}
+    id("com.google.devtools.ksp")}
 
 android {
     namespace = "edu.cc231030.MC.project"
@@ -80,7 +80,8 @@ dependencies {
     // Room for database operations
     implementation(libs.androidx.room.common) // Room core dependencies
     implementation(libs.androidx.room.ktx) // Room KTX extensions
-    implementation("androidx.room:room-runtime:2.5.0") // Room runtime (latest stable)
+
+    ksp("androidx.room:room-compiler:2.6.1")
 
     // Debugging libraries
     debugImplementation(libs.androidx.ui.tooling) // Jetpack Compose tooling for debugging
