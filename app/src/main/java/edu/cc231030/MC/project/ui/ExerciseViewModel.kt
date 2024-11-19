@@ -27,7 +27,6 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
     val exerciseSets = _sets.asStateFlow()
 
     init {
-        // coroutine to collect exercises data
         viewModelScope.launch {
             try {
                 repository.exercises.collect { data ->
@@ -39,7 +38,6 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
                     }
                 }
             } catch (e: Exception) {
-                // Handle error for exercises flow
                 _exercises.update { oldState -> oldState.copy() }
             }
         }
@@ -78,15 +76,32 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
     }
 
+    // *************************************************
+
     fun addExercise(name: String) {
         viewModelScope.launch {
             repository.addExercise(name)
         }
     }
 
+    fun deleteExercise(exercise: Exercise) {
+        viewModelScope.launch {
+            repository.deleteExercise(exercise)
+        }
+    }
+
+    // *************************************************
+
+
     fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
         viewModelScope.launch {
             repository.addExerciseSet(exerciseId, reps, weight)
+        }
+    }
+
+    fun updateExerciseSet(id: Int, exerciseId: Int, reps: Int, weight: Int){
+        viewModelScope.launch {
+            repository.updateExerciseSet(id, exerciseId, reps, weight)
         }
     }
 
@@ -96,11 +111,6 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
     }
 
-    fun deleteExercise(exercise: Exercise) {
-        viewModelScope.launch {
-            repository.deleteExercise(exercise)
-        }
-    }
 
 
 }

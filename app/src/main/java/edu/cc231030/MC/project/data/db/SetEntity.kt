@@ -9,9 +9,9 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(
             entity = ExerciseEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["exerciseId"],
-            onDelete = ForeignKey.CASCADE // deleting exercise and set
+            parentColumns = ["id"], // parent table that is being referenced for the exerciseId
+            childColumns = ["exerciseId"], // column that holds the reference from the parentColumn
+            onDelete = ForeignKey.CASCADE // delete set when parent reference is deletec
         )
     ]
 )

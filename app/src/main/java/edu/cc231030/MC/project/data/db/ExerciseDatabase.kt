@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import edu.cc231030.MC.project.data.db.ExerciseDao
-import edu.cc231030.MC.project.data.db.ExerciseEntity
 
 // add here new entities
 @Database(entities = [ExerciseEntity::class, ExerciseSetEntity::class], version = 3, exportSchema = false)

@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview) // Compose preview
     implementation(libs.androidx.material3) // Material 3 UI components
 
+
     // Navigation for Compose
     implementation("androidx.navigation:navigation-compose:2.7.4") // Jetpack Compose navigation
 

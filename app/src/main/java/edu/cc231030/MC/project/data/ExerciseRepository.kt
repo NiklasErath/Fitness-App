@@ -81,6 +81,11 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         exerciseDao.deleteExerciseSet(entity)
     }
 
+    suspend fun updateExerciseSet(id: Int, exerciseId: Int, reps: Int, weight: Int){
+        val entity = ExerciseSetEntity(id, exerciseId, reps, weight)
+        exerciseDao.updateExerciseSet(entity)
+    }
+
 
     suspend fun addExercise(name: String) {
         exerciseDao.addExercise(

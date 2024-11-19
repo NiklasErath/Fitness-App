@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
+import edu.cc231030.MC.project.data.ExerciseSet
 import kotlinx.coroutines.flow.Flow
 
 //Data Access object
@@ -31,5 +33,8 @@ interface ExerciseDao {
 
     @Delete
     suspend fun deleteExerciseSet(exerciseSetEntity: ExerciseSetEntity)
+
+    @Update
+    suspend fun  updateExerciseSet(exerciseSetEntity: ExerciseSetEntity)
 
 }
