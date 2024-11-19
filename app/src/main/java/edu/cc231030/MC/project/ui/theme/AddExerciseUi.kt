@@ -57,6 +57,11 @@ fun AddExerciseScreen(
         ) {
             Text("Create Exercise")
         }
+        Button(onClick = {
+            navController.navigateUp()
+        }) {
+            Text("Cancel")
+        }
     }
 }
 

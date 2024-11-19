@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 // add here new entities
-@Database(entities = [ExerciseEntity::class, ExerciseSetEntity::class], version = 3, exportSchema = false)
+@Database(entities = [ExerciseEntity::class, ExerciseSetEntity::class, SessionEntity::class], version = 4, exportSchema = false)
 abstract class ExerciseDatabase : RoomDatabase() {
 
     abstract fun exerciseDao(): ExerciseDao
@@ -25,7 +25,7 @@ abstract class ExerciseDatabase : RoomDatabase() {
                     .fallbackToDestructiveMigration() // Automatically handles migrations
                     .build()
                 INSTANCE = instance
-                println("Databse success")
+                println("Database success")
                 return instance
             }
         }

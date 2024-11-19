@@ -1,7 +1,6 @@
 package edu.cc231030.MC.project.ui.theme
 
 import ExerciseViewModel
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -53,6 +52,12 @@ fun MainScreen(
             viewModel.onAddButtonClicked()
         }) {
             Text("Add new Exercise!")
+        }
+        Button(onClick = {
+            navController.navigate("SessionScreen")
+            viewModel.onAddButtonClicked()
+        }) {
+            Text("SessionScreen")
         }
 
 

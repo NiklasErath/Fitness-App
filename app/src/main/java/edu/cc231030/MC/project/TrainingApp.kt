@@ -12,6 +12,8 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.data.db.ExerciseDatabase
 import edu.cc231030.MC.project.ui.theme.MainScreen
 import edu.cc231030.MC.project.ui.theme.AddExerciseScreen
+import edu.cc231030.MC.project.ui.theme.SessionScreen
+
 
 
 
@@ -32,6 +34,9 @@ fun TrainingApp(modifier: Modifier = Modifier) {
             }
             composable("addExerciseScreen") {
                 AddExerciseScreen(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository)
+            }
+            composable("SessionScreen") {
+                SessionScreen(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository)
             }
         }
     }
