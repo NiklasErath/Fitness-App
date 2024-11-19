@@ -1,6 +1,7 @@
 package edu.cc231030.MC.project.ui.theme
 
 import ExerciseViewModel
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,13 +20,22 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.Exercise
 import edu.cc231030.MC.project.data.ExerciseRepository
+import edu.cc231030.MC.project.data.ExerciseSet
+import edu.cc231030.MC.project.ui.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.ExercisesUiState
 
 // Ui for the Main Screen
 
 @Composable
-fun ExerciseItem(exercise: Exercise, onDelete: (Exercise) -> Unit, onAddSet: (Int, Int, Int) -> Unit) {
+fun ExerciseItem(
+    exercise: Exercise,
+    exerciseSet: List<ExerciseSet>,
+    onDelete: (Exercise) -> Unit,
+    onDeleteSet: (ExerciseSet) -> Unit,
+    onAddSet: (Int, Int, Int) -> Unit
+) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,14 +48,34 @@ fun ExerciseItem(exercise: Exercise, onDelete: (Exercise) -> Unit, onAddSet: (In
         }
     }
     Column {
-        // Add a button to add a set for the exercise
         Button(
-            onClick = { onAddSet(exercise.id, 3, 5) } // Call the onAddSet function with exerciseId
+            onClick = { onAddSet(exercise.id, 0, 0) }
         ) {
             Text(text = "Add Set")
         }
+
+        if (exerciseSet.isNotEmpty()) {
+            // display the sets of the exercise
+            exerciseSet.forEach { set ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Text(text = "Reps: ${set.reps}, Weight: ${set.weight}")
+                    Button(onClick = { onDeleteSet(set) }) {
+                        Text(text = "Delete")
+                    }
+                }
+            }
+        } else {
+            Text(text = "No sets added yet.")
+        }
     }
 }
+
 
 @Composable
 fun MainScreen(
@@ -58,8 +88,17 @@ fun MainScreen(
         factory = ExerciseViewModelFactory(exerciseRepository)
     )
 
-    // Collect state
-    val exercisesState by viewModel.exercises.collectAsState(initial = ExercisesUiState(emptyList()))
+    val exercisesState by viewModel.exercises.collectAsState(
+        initial = ExercisesUiState(
+            emptyList()
+        )
+    )
+    val exerciseSet by viewModel.exerciseSets.collectAsState(
+        initial = ExerciseSetsUiState(
+            emptyList()
+        )
+    )
+
 
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         // Button to navigate to AddExerciseScreen
@@ -75,8 +114,11 @@ fun MainScreen(
         if (exercisesState.exercises.isEmpty()) {
             Text(text = "No exercises available", modifier = modifier)
         } else {
-            // Display exercises in a list
+            // display exxercises on the screen
             exercisesState.exercises.forEach { exercise ->
+                val correspondingExerciseSets =
+                    exerciseSet.exerciseSet.filter { it.exerciseId == exercise.id }
+                // filter the set for each exercise
                 OutlinedCard(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -84,9 +126,15 @@ fun MainScreen(
                 ) {
                     ExerciseItem(
                         exercise = exercise,
-                        onDelete = { exercise -> viewModel.deleteExercise(exercise) },  // Pass Exercise for deletion
+                        exerciseSet = correspondingExerciseSets,
+                        onDelete = { exercise -> viewModel.deleteExercise(exercise) },
+                        onDeleteSet = { exerciseSet -> viewModel.deleteExerciseSet(exerciseSet) },
                         onAddSet = { exerciseId, reps, weight ->
-                            viewModel.addExerciseSet(exerciseId, reps, weight)  // Call ViewModel's function to add a set
+                            viewModel.addExerciseSet(
+                                exerciseId,
+                                reps,
+                                weight
+                            )
                         })
                 }
             }

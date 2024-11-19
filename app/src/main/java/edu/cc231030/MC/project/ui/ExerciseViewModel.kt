@@ -1,3 +1,6 @@
+import android.adservices.appsetid.AppSetId
+import android.util.Log
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.cc231030.MC.project.data.Exercise
@@ -21,45 +24,53 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
 
     // public StateFlow for observing exercises
     val exercises = _exercises.asStateFlow()
-    val sets= _sets.asStateFlow()
+    val exerciseSets = _sets.asStateFlow()
 
     init {
-        // coroutine to collect data from the repository
+        // coroutine to collect exercises data
         viewModelScope.launch {
-            // Start with loading state
-            _exercises.update { it.copy() }
-
             try {
                 repository.exercises.collect { data ->
-                    // update the _exercises state with fetched data
+                    Log.d("ExerciseSets", "Collected exercises: $data")  // Log the collected data
                     _exercises.update { oldState ->
                         oldState.copy(
                             exercises = data,
                         )
                     }
                 }
+            } catch (e: Exception) {
+                // Handle error for exercises flow
+                _exercises.update { oldState -> oldState.copy() }
+            }
+        }
 
-                repository.exerciseSets.collect{ data ->
-                    _sets.update {
-                        oldState ->
+        // coroutine to collect exerciseSets data
+        viewModelScope.launch {
+            try {
+                repository.exerciseSets.collect { data ->
+                    Log.d("ExerciseSets", "Collected sets: $data")  // Log the collected data
+                    _sets.update { oldState ->
                         oldState.copy(
                             exerciseSet = data,
                         )
                     }
-
                 }
             } catch (e: Exception) {
-                // Handle error, e.g., network failure
-                _exercises.update { oldState ->
-                    oldState.copy(
-                    )
-                }
-                _sets.update { oldState ->
-                    oldState.copy()
-                }
+                // Handle error for exerciseSets flow
+                _sets.update { oldState -> oldState.copy() }
             }
         }
     }
+
+
+    /*
+    fun getSetsforExercise(exerciseId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getSetsforExercise(exerciseId)
+        }
+    }
+*/
+
 
     fun onAddButtonClicked() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -73,16 +84,23 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
     }
 
-    fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int){
+    fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
         viewModelScope.launch {
             repository.addExerciseSet(exerciseId, reps, weight)
         }
     }
 
-    fun deleteExercise(exercise: Exercise){
+    fun deleteExerciseSet(exerciseSet: ExerciseSet) {
+        viewModelScope.launch {
+            repository.deleteExerciseSet(exerciseSet)
+        }
+    }
+
+    fun deleteExercise(exercise: Exercise) {
         viewModelScope.launch {
             repository.deleteExercise(exercise)
         }
     }
-}
 
+
+}
