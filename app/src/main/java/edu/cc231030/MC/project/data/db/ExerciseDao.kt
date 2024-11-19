@@ -19,4 +19,23 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM exercises")
     fun findAllExercises(): Flow<List<ExerciseEntity>>
+
+    @Query("SELECT * FROM exerciseSets WHERE exerciseId = :exerciseId")
+    fun getSetsForExercise(exerciseId: Int): Flow<List<ExerciseSetEntity>>
+
+    @Insert
+    suspend fun addExerciseSet(exerciseSetEntity: ExerciseSetEntity)
+
+
+/*
+    // Get all sets for a specific exercise
+    @Query("SELECT * FROM sets WHERE exerciseId = :exerciseId")
+    fun getSetsForExercise(exerciseId: Int): List<SetEntity>
+
+    // Get all exercises with their sets
+    @Transaction
+    @Query("SELECT * FROM exercises")
+    fun findAllExercisesWithSets(): Flow<List<ExerciseWithSets>>
+
+ */
 }

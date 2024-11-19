@@ -7,7 +7,8 @@ import androidx.room.RoomDatabase
 import edu.cc231030.MC.project.data.db.ExerciseDao
 import edu.cc231030.MC.project.data.db.ExerciseEntity
 
-@Database(entities = [ExerciseEntity::class], version = 1, exportSchema = false)
+// add here new entities
+@Database(entities = [ExerciseEntity::class, ExerciseSetEntity::class], version = 3, exportSchema = false)
 abstract class ExerciseDatabase : RoomDatabase() {
 
     abstract fun exerciseDao(): ExerciseDao
