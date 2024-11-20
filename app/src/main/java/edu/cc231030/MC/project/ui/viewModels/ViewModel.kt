@@ -1,4 +1,4 @@
-package edu.cc231030.MC.project.ui
+package edu.cc231030.MC.project.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.StateFlow

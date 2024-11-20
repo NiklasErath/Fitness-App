@@ -5,6 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import edu.cc231030.MC.project.data.db.Entities.ExerciseEntity
+import edu.cc231030.MC.project.data.db.Entities.ExerciseSetEntity
+import edu.cc231030.MC.project.data.db.Entities.SessionEntity
 import kotlinx.coroutines.flow.Flow
 
 //Data Access object

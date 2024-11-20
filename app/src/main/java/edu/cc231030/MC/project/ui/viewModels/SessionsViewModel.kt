@@ -1,12 +1,13 @@
+package edu.cc231030.MC.project.ui.viewModels
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import android.util.Log
 import edu.cc231030.MC.project.data.ExerciseRepository
-import edu.cc231030.MC.project.ui.SessionsUiState
+import edu.cc231030.MC.project.ui.States.SessionsUiState
 import kotlinx.coroutines.flow.update
 
 
@@ -43,4 +44,5 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             repository.addRandomSession()
         }
     }
+
 }

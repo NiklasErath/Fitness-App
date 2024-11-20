@@ -4,18 +4,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import edu.cc231030.MC.project.data.Exercise
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.data.db.ExerciseDatabase
-import edu.cc231030.MC.project.ui.theme.MainScreen
+import edu.cc231030.MC.project.ui.theme.ExerciseScreen
 import edu.cc231030.MC.project.ui.theme.AddExerciseScreen
 import edu.cc231030.MC.project.ui.theme.SessionScreen
+import edu.cc231030.MC.project.ui.theme.SessionIdScreen
+import edu.cc231030.MC.project.ui.theme.AddSessionScreen
 
 
 
+enum class Routes(val route: String) {
+    Home("SessionScreen"),
+    Exercises("ExerciseScreen"),
+    Session("SessionIdScreen/{sessionId"),
+    AddSession("addSessionScreen"),
+    AddExercise("addExerciseScreen")
+
+}
 
 @Composable
 fun TrainingApp(modifier: Modifier = Modifier) {
@@ -28,16 +40,32 @@ fun TrainingApp(modifier: Modifier = Modifier) {
 
     // Box for the padding/modifier from the MainActivity
     Box(modifier = modifier) {
-        NavHost(navController = navController, startDestination = "mainScreen") {
-            composable("mainScreen") {
-                MainScreen(modifier = Modifier, navController = navController, exerciseRepository = exerciseRepository)
+        NavHost(navController = navController, Routes.Home.route) {
+            composable(Routes.Exercises.route) {
+                ExerciseScreen(modifier = Modifier, navController = navController, exerciseRepository = exerciseRepository)
             }
-            composable("addExerciseScreen") {
+            composable(Routes.AddExercise.route) {
                 AddExerciseScreen(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository)
             }
-            composable("SessionScreen") {
+            composable(Routes.Home.route) {
                 SessionScreen(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository)
             }
+            composable(Routes.AddSession.route) {
+                AddSessionScreen(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository)
+            }
+            composable(
+                route = "SessionIdScreen/{sessionId}",
+                arguments = listOf(navArgument("sessionId") { type = NavType.StringType })
+            ) {
+                val sessionId = it.arguments?.getString("sessionId")
+                SessionIdScreen(
+                    modifier = modifier,
+                    navController = navController,
+                    exerciseRepository = exerciseRepository,
+                    sessionId = sessionId
+                )
+            }
+
         }
     }
 }

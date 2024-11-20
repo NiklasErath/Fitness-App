@@ -1,15 +1,15 @@
 package edu.cc231030.MC.project.data
 
 import android.util.Log
-import androidx.compose.ui.Modifier
 import edu.cc231030.MC.project.data.db.ExerciseDao
-import edu.cc231030.MC.project.data.db.ExerciseEntity
-import edu.cc231030.MC.project.data.db.ExerciseSetEntity
-import edu.cc231030.MC.project.data.db.SessionEntity
+import edu.cc231030.MC.project.data.db.Entities.ExerciseEntity
+import edu.cc231030.MC.project.data.db.Entities.ExerciseSetEntity
+import edu.cc231030.MC.project.data.db.Entities.SessionEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ExerciseRepository(private val exerciseDao: ExerciseDao) {
+
 
     val names = listOf(
         "Training1",
@@ -79,6 +79,14 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
     // *********************************************
 
+    val sessions: Flow<List<Session>> = exerciseDao.getAllSessions()
+        .map { list ->
+            list.map { entity ->
+                Session(entity.id, entity.name)
+            }
+        }
+
+
     suspend fun addRandomSession() {
         exerciseDao.addSession(
             SessionEntity(0, names.random())
@@ -97,14 +105,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         exerciseDao.deleteSession(entity)
     }
 
-    val sessions: Flow<List<Session>> = exerciseDao.getAllSessions()
-        .map { list ->
-            list.map { entity ->
-                Session(entity.id, entity.name)
-            }
-        }
 }
-
 //***************************************************************
 
 /*

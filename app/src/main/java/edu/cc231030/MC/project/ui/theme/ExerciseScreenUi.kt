@@ -1,6 +1,6 @@
 package edu.cc231030.MC.project.ui.theme
 
-import ExerciseViewModel
+import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,13 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
-import edu.cc231030.MC.project.ui.ExerciseSetsUiState
+import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
-import edu.cc231030.MC.project.ui.ExercisesUiState
+import edu.cc231030.MC.project.ui.States.ExercisesUiState
 
 // Ui for the Main Screen
 @Composable
-fun MainScreen(
+fun ExerciseScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     exerciseRepository: ExerciseRepository

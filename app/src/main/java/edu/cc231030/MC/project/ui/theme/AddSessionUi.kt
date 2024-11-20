@@ -1,6 +1,6 @@
 package edu.cc231030.MC.project.ui.theme
 
-import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
+import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,18 +15,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
-import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
+import edu.cc231030.MC.project.ui.SessionViewModelFactory
 
 @Composable
-fun AddExerciseScreen(
+fun AddSessionScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     exerciseRepository: ExerciseRepository
 ) {
     // Use remember to store the state, and directly access the value.
-    val exerciseName = remember { mutableStateOf("") }
-    val viewModel: ExerciseViewModel = viewModel(
-        factory = ExerciseViewModelFactory(exerciseRepository)
+    val sessionName = remember { mutableStateOf("") }
+    val viewModel: SessionsViewModel = viewModel(
+        factory = SessionViewModelFactory(exerciseRepository)
     )
 
 
@@ -35,27 +35,27 @@ fun AddExerciseScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(text = "Add New Exercise")
+        Text(text = "Add New Session")
 
         OutlinedTextField(
-            value = exerciseName.value,
-            onValueChange = { newName -> exerciseName.value = newName },
-            label = { Text("Exercise Name") }
+            value = sessionName.value,
+            onValueChange = { newName -> sessionName.value = newName },
+            label = { Text("Session Name") }
         )
 
         // Save Button to add the exercise
         Button(
             onClick = {
-                if (exerciseName.value.isNotEmpty()) {
+                if (sessionName.value.isNotEmpty()) {
                     //pass the name to the function to create a new exercise
-                    viewModel.addExercise(exerciseName.value)
+                    viewModel.addSession(sessionName.value)
                     // navigate back to previous Screen
                     navController.popBackStack()
                 }
             },
             modifier = Modifier.padding(top = 16.dp)
         ) {
-            Text("Create Exercise")
+            Text("Create Session")
         }
         Button(onClick = {
             navController.navigateUp()

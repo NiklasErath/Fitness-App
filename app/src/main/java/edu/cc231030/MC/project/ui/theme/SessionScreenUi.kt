@@ -1,7 +1,7 @@
 package edu.cc231030.MC.project.ui.theme
 
-import SessionsViewModel
-import android.util.Log
+import androidx.compose.foundation.clickable
+import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
-import edu.cc231030.MC.project.ui.SessionsUiState
+import edu.cc231030.MC.project.ui.States.SessionsUiState
 
 
 @Composable
@@ -52,9 +51,15 @@ fun SessionScreen(
         }
 
         Button(onClick = {
-            viewModel.addRandomSession()
+            navController.navigate("exerciseScreen")
         }) {
-            Text(text = "Add Session")
+            Text("Exercises")
+        }
+
+        Button(onClick = {
+            navController.navigate("addSessionScreen")
+        }) {
+            Text("Add new Session!")
         }
 
         if (sessionsState.sessions.isEmpty()) {
@@ -73,11 +78,14 @@ fun SessionScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                itemsIndexed(sessionsState.sessions) { index, session ->
+                itemsIndexed(sessionsState.sessions) { _, session ->
                     OutlinedCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(10.dp)
+                            .padding(10.dp),
+                        onClick = {
+                            navController.navigate("SessionIdScreen/${session.id}")
+                        }
                     ) {
                         Text(
                             text = session.name,
@@ -86,6 +94,7 @@ fun SessionScreen(
                     }
                 }
             }
+
         }
     }
 }

@@ -1,4 +1,4 @@
-package edu.cc231030.MC.project.data.db
+package edu.cc231030.MC.project.data.db.Entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

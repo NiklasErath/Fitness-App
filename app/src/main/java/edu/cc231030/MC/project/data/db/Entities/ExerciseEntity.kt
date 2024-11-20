@@ -1,7 +1,6 @@
-package edu.cc231030.MC.project.data.db
+package edu.cc231030.MC.project.data.db.Entities
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -18,7 +17,7 @@ import androidx.room.PrimaryKey
 data class ExerciseEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    //val sessionId: Int,
     val name: String,
+    //val sessionId: Int,
 )
 

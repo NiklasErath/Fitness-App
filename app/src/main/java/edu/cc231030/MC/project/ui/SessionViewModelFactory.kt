@@ -1,6 +1,6 @@
 package edu.cc231030.MC.project.ui
 
-import SessionsViewModel
+import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import edu.cc231030.MC.project.data.ExerciseRepository
