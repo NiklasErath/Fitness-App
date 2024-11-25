@@ -57,7 +57,8 @@ fun TrainingApp(modifier: Modifier = Modifier) {
                 route = "SessionIdScreen/{sessionId}",
                 arguments = listOf(navArgument("sessionId") { type = NavType.StringType })
             ) {
-                val sessionId = it.arguments?.getString("sessionId")
+                // if argument null it returns null to avoid NullPointerExperction
+                val sessionId = it.arguments?.getString("sessionId") // retrieves the ID from the argument bundle
                 SessionIdScreen(
                     modifier = modifier,
                     navController = navController,

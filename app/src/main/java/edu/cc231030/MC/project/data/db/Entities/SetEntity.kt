@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
             entity = ExerciseEntity::class,
             parentColumns = ["id"], // parent table that is being referenced for the exerciseId
             childColumns = ["exerciseId"], // column that holds the reference from the parentColumn
-            onDelete = ForeignKey.CASCADE // delete set when parent reference is deletec
+            onDelete = ForeignKey.CASCADE // delete set when parent reference is deleted
         )
     ]
 )

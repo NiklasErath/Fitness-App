@@ -44,12 +44,11 @@ fun SessionScreen(
 
 
     Column {
-        Button(onClick = {
-            navController.navigateUp()
-        }) {
-            Text("Back")
+        Text(text = "Your Sessions:")
+        OutlinedCard() {
+            Text(text = "This is already my project setup, but it contains all the requirements for the Demonstrator 2 assignment. I hope that's okay :) The idea is to have sessions that store exercises. Furthermore, the user can add sets to the exercises with 'reps' and 'weight' parameters."
+            )
         }
-
         Button(onClick = {
             navController.navigate("exerciseScreen")
         }) {
@@ -93,8 +92,8 @@ fun SessionScreen(
                         )
                     }
                 }
-            }
 
+            }
         }
     }
 }

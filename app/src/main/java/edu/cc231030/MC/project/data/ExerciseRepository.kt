@@ -35,12 +35,15 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             }
         }
 
+    /*
     suspend fun addRandomExercise() {
         exerciseDao.addExercise(
             ExerciseEntity(0, names.random())
         )
 
     }
+
+     */
 
     suspend fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
         exerciseDao.addExerciseSet(

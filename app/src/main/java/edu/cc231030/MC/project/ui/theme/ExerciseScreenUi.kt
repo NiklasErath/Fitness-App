@@ -49,13 +49,13 @@ fun ExerciseScreen(
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Button(onClick = {
             navController.navigate("addExerciseScreen")
-            viewModel.onAddButtonClicked()
+          //  viewModel.onAddButtonClicked()
         }) {
             Text("Add new Exercise!")
         }
         Button(onClick = {
             navController.navigate("SessionScreen")
-            viewModel.onAddButtonClicked()
+      //      viewModel.onAddButtonClicked()
         }) {
             Text("SessionScreen")
         }
@@ -65,7 +65,7 @@ fun ExerciseScreen(
         if (exercisesState.exercises.isEmpty()) {
             Text(text = "No exercises available", modifier = modifier)
         } else {
-            // display exxercises on the screen
+            // display exercises on the screen
             LazyColumn {
                 // itemsIndexed iterates over the exercise List while providing both the index and the element at each iteration - index is order , element the objects
                 itemsIndexed(exercisesState.exercises) { index, exercise ->
@@ -101,6 +101,11 @@ fun ExerciseScreen(
                     }
                 }
             }
+        }
+        Button(onClick = {
+            navController.navigateUp()
+        }) {
+            Text("Back")
         }
     }
 }

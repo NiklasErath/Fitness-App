@@ -23,7 +23,7 @@ fun AddExerciseScreen(
     navController: NavController,
     exerciseRepository: ExerciseRepository
 ) {
-    // Use remember to store the state, and directly access the value.
+    // remember to store the state, and directly access the value.
     val exerciseName = remember { mutableStateOf("") }
     val viewModel: ExerciseViewModel = viewModel(
         factory = ExerciseViewModelFactory(exerciseRepository)
@@ -43,7 +43,6 @@ fun AddExerciseScreen(
             label = { Text("Exercise Name") }
         )
 
-        // Save Button to add the exercise
         Button(
             onClick = {
                 if (exerciseName.value.isNotEmpty()) {

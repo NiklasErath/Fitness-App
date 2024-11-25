@@ -69,13 +69,13 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
     }
 */
 
-
+/*
     fun onAddButtonClicked() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addRandomExercise()
         }
     }
-
+*/
     // *************************************************
 
     fun addExercise(name: String) {

@@ -23,7 +23,7 @@ fun AddSessionScreen(
     navController: NavController,
     exerciseRepository: ExerciseRepository
 ) {
-    // Use remember to store the state, and directly access the value.
+    // remember to store the state, and directly access the value.
     val sessionName = remember { mutableStateOf("") }
     val viewModel: SessionsViewModel = viewModel(
         factory = SessionViewModelFactory(exerciseRepository)
@@ -43,13 +43,12 @@ fun AddSessionScreen(
             label = { Text("Session Name") }
         )
 
-        // Save Button to add the exercise
         Button(
             onClick = {
                 if (sessionName.value.isNotEmpty()) {
                     //pass the name to the function to create a new exercise
                     viewModel.addSession(sessionName.value)
-                    // navigate back to previous Screen
+                    //navigate back to previous Screen
                     navController.popBackStack()
                 }
             },
