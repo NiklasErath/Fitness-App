@@ -14,12 +14,13 @@ import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 
 @Composable
-fun SessionIdScreen(
+fun SessionAddExercise(
     modifier: Modifier = Modifier,
     navController: NavController,
     exerciseRepository: ExerciseRepository,
     sessionId: String?
-) {
+
+){
     val viewModel: SessionsViewModel = viewModel(
         factory = SessionViewModelFactory(exerciseRepository)
     )
@@ -29,17 +30,12 @@ fun SessionIdScreen(
     Column(modifier = modifier.padding(16.dp)) {
         Text(text = "Session ID: $sessionId")
 
-
-        Button(onClick = {
-            navController.navigate("sessionAddExercise/${sessionId}")
-        }) {
-            Text("Add Exercises")
-        }
-
         Button(onClick = {
             navController.navigateUp()
         }) {
             Text("Back")
         }
     }
+
+
 }

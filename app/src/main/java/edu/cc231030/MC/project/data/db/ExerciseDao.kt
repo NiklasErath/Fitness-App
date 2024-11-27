@@ -54,4 +54,6 @@ interface ExerciseDao {
     @Query("SELECT * FROM sessions")
     fun getAllSessions(): Flow<List<SessionEntity>>
 
+    @Update
+    suspend fun updateSession(sessionEntity: SessionEntity)
 }

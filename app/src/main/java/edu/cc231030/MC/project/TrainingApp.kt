@@ -17,16 +17,19 @@ import edu.cc231030.MC.project.ui.theme.AddExerciseScreen
 import edu.cc231030.MC.project.ui.theme.SessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionIdScreen
 import edu.cc231030.MC.project.ui.theme.AddSessionScreen
+import edu.cc231030.MC.project.ui.theme.SessionAddExercise
+
+
 
 
 
 enum class Routes(val route: String) {
     Home("SessionScreen"),
     Exercises("ExerciseScreen"),
-    Session("SessionIdScreen/{sessionId"),
+    Session("SessionIdScreen/{sessionId}"),
     AddSession("addSessionScreen"),
-    AddExercise("addExerciseScreen")
-
+    AddExercise("addExerciseScreen"),
+    SessionAddExercise("SessionAddExercise/{sessionId}")
 }
 
 @Composable
@@ -54,7 +57,7 @@ fun TrainingApp(modifier: Modifier = Modifier) {
                 AddSessionScreen(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository)
             }
             composable(
-                route = "SessionIdScreen/{sessionId}",
+                Routes.Session.route,
                 arguments = listOf(navArgument("sessionId") { type = NavType.StringType })
             ) {
                 // if argument null it returns null to avoid NullPointerExperction
@@ -65,6 +68,12 @@ fun TrainingApp(modifier: Modifier = Modifier) {
                     exerciseRepository = exerciseRepository,
                     sessionId = sessionId
                 )
+            }
+            composable(Routes.SessionAddExercise.route,
+                arguments = listOf(navArgument("sessionId") {type = NavType.StringType})
+                ){
+                val sessionId = it.arguments?.getString("sessionId")
+            SessionAddExercise(modifier=Modifier, navController = navController, exerciseRepository = exerciseRepository, sessionId = sessionId)
             }
 
         }

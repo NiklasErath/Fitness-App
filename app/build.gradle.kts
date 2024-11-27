@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview) // Compose preview
     implementation(libs.androidx.material3) // Material 3 UI components
 
+    implementation ("com.google.code.gson:gson:2.10.1") // Converter
 
     // Navigation for Compose
     implementation("androidx.navigation:navigation-compose:2.7.4") // Jetpack Compose navigation
@@ -81,7 +82,8 @@ dependencies {
 
     // Room for database operations
     implementation(libs.androidx.room.common) // Room core dependencies
-    implementation(libs.androidx.room.ktx) // Room KTX extensions
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.firebase.crashlytics.buildtools) // Room KTX extensions
 
     ksp("androidx.room:room-compiler:2.6.1")
 
