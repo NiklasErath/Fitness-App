@@ -89,13 +89,15 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             }
         }
 
+    /*
+        suspend fun addRandomSession() {
+            exerciseDao.addSession(
+                SessionEntity(0, names.random())
+            )
 
-    suspend fun addRandomSession() {
-        exerciseDao.addSession(
-            SessionEntity(0, names.random())
-        )
+        }
 
-    }
+     */
 
     suspend fun addSession(name: String) {
         exerciseDao.addSession(
@@ -106,6 +108,31 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     suspend fun deleteSession(session: Session) {
         val entity = SessionEntity(id = session.id, name = session.name)
         exerciseDao.deleteSession(entity)
+    }
+
+    suspend fun getSessionById(sessionId: Int): Session? {
+        return exerciseDao.getSessionById(sessionId)?.let { entity ->
+            // Convert SessionEntity to Session
+            Session(
+                id = entity.id,
+                name = entity.name,
+                exercises = entity.exercises
+            )
+        }
+    }
+
+    suspend fun addExerciseToSession(session: Session, exerciseId: Int) {
+        // update the list of exercises
+        val updatedExercises = session.exercises.toMutableList().apply { add(exerciseId) }
+        // val updated Entity to update the Entity
+        val updatedEntity = SessionEntity(
+            id = session.id,
+            name = session.name,
+            exercises = updatedExercises
+        )
+        exerciseDao.updateSession(
+            updatedEntity
+        )
     }
 
 }

@@ -38,11 +38,33 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             repository.addSession(name)
         }
     }
+    /*
+        fun getSessionById(sessionId: Int) {
+            viewModelScope.launch {
+                repository.getSessionById(sessionId)
+            }
+        }
 
+     */
+
+    fun addExerciseToSession(sessionId: Int, exerciseId: Int) {
+        viewModelScope.launch {
+            // fetch the session by Id to update the whole entity
+            val session = repository.getSessionById(sessionId)
+            if (session != null) {
+                repository.addExerciseToSession(session, exerciseId)
+            }
+        }
+    }
+
+
+    /*
     fun addRandomSession() {
         viewModelScope.launch {
             repository.addRandomSession()
         }
     }
+
+     */
 
 }
