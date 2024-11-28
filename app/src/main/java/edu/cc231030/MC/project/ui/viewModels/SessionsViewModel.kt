@@ -54,14 +54,7 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             repository.addSession(name)
         }
     }
-    /*
-        fun getSessionById(sessionId: Int) {
-            viewModelScope.launch {
-                repository.getSessionById(sessionId)
-            }
-        }
 
-     */
 
     // *******************************************************************
 
@@ -74,15 +67,4 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             }
         }
     }
-
-
-    /*
-    fun addRandomSession() {
-        viewModelScope.launch {
-            repository.addRandomSession()
-        }
-    }
-
-     */
-
 }

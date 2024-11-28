@@ -2,6 +2,7 @@ package edu.cc231030.MC.project.ui.theme
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -21,6 +22,7 @@ import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
+import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
@@ -45,6 +47,17 @@ fun SessionIdScreen(
         factory = ExerciseViewModelFactory(exerciseRepository)
     )
 
+    val exerciseSetViewModel: ExerciseViewModel = viewModel(
+        factory = ExerciseViewModelFactory(exerciseRepository)
+    )
+
+
+    val exerciseSet by exerciseSetViewModel.exerciseSets.collectAsState(
+        initial = ExerciseSetsUiState(
+            emptyList()
+        )
+    )
+
     val sessionState = viewModel.currentSession.collectAsState()
     val currentSession = sessionState.value.currentSession
     val exercisesState by exerciseViewModel.exercises.collectAsState(
@@ -52,13 +65,6 @@ fun SessionIdScreen(
             emptyList()
         )
     )
-    //  val exercises = currentSession.exercises.map { id -> viewMode  }
-    /*
-        currentSession.exercises.forEach() { exerciseId ->
-            exerciseViewModel.getExerciseById(exerciseId)
-        }
-
-     */
 
     exerciseViewModel.getExerciseById(currentSession.exercises)
 
@@ -66,28 +72,52 @@ fun SessionIdScreen(
     LaunchedEffect(sessionId) {
         viewModel.getSessionById(sessionIdInt)
     }
-
-    Column(modifier = modifier.padding(10.dp)) {
-        Text(text = "Session: ${currentSession.name}")
-        if (currentSession.exercises.isEmpty()) {
-            Text(text = "No Exercises in this Session")
+    Column {
+        Text(text = "${currentSession.name}")
+        if (exercisesState.exercises.isEmpty()) {
+            Text(text = "No exercises available", modifier = modifier)
         } else {
-
-            Log.d("Session", "Exercises: ${currentSession.exercises}")
+            // display exercises on the screen
             LazyColumn {
+                // itemsIndexed iterates over the exercise List while providing both the index and the element at each iteration - index is order , element the objects
                 itemsIndexed(exercisesState.exercises) { index, exercise ->
-                    OutlinedCard(modifier = Modifier.padding(bottom = 8.dp)) {
-                        val order = index + 1
-                        Text(
-                            text = "$order Exercise: ${exercise.name}",
-                            modifier = Modifier.padding(16.dp)
+                    val correspondingExerciseSets =
+                        exerciseSet.exerciseSet.filter { it.exerciseId == exercise.id }
+                    // filter the set for each exercise
+                    OutlinedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                    ) {
+                        ExerciseItem(
+                            exercise = exercise,
+                            exerciseSet = correspondingExerciseSets,
+                            onDelete = { exercise -> exerciseViewModel.deleteExercise(exercise) },
+                            onDeleteSet = { exerciseSet ->
+                                exerciseViewModel.deleteExerciseSet(
+                                    exerciseSet
+                                )
+                            },
+                            onUpdateSet = { id, exerciseId, reps, weight ->
+                                exerciseViewModel.updateExerciseSet(
+                                    id,
+                                    exerciseId,
+                                    reps,
+                                    weight
+                                )
+                            },
+                            onAddSet = { exerciseId, reps, weight ->
+                                exerciseViewModel.addExerciseSet(
+                                    exerciseId,
+                                    reps,
+                                    weight
+                                )
+                            }
                         )
                     }
                 }
             }
         }
-
-
         Button(onClick = {
             navController.navigate("sessionAddExercise/${sessionId}")
         }) {
@@ -98,8 +128,8 @@ fun SessionIdScreen(
             navController.navigateUp()
         }) {
             Text("Back")
-        }
 
+        }
     }
 }
 

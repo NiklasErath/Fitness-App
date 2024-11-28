@@ -77,6 +77,12 @@ fun SessionAddExercise(
             }
         }
         Button(onClick = {
+            navController.navigate("ExerciseScreen")
+        }) {
+            Text("All Exercises")
+        }
+
+        Button(onClick = {
             navController.navigateUp()
         }) {
             Text("Back")
