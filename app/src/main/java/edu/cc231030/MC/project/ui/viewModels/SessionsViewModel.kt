@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import android.util.Log
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.States.SessionsUiState
+import edu.cc231030.MC.project.ui.States.currentSessionUiState
 import kotlinx.coroutines.flow.update
 
 
@@ -15,6 +16,10 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
 
     private val _sessions = MutableStateFlow(SessionsUiState(emptyList()))
     val sessions = _sessions.asStateFlow()
+
+    private val _currentSession = MutableStateFlow(currentSessionUiState())
+    val currentSession = _currentSession.asStateFlow()
+
 
     init {
         viewModelScope.launch {
@@ -32,6 +37,27 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             }
         }
     }
+/*
+    init {
+        val sessionId = 1
+        viewModelScope.launch {
+            val session = repository.getSessionById(sessionId)
+            _currentSession.update { it.copy(currentSession = session) }
+        }
+    }
+
+ */
+
+    fun getSessionById(sessionId: Int) {
+        viewModelScope.launch {
+            val session = repository.getSessionById(sessionId)
+            Log.d("Sessions", "Collected Sessionsetrea: $session")
+            _currentSession.update { it.copy(currentSession = session) }
+            Log.d("Sessions", "Collected Sessionsetrea: $session")
+
+
+        }
+    }
 
     fun addSession(name: String) {
         viewModelScope.launch {
@@ -46,6 +72,8 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
 
      */
+
+    // *******************************************************************
 
     fun addExerciseToSession(sessionId: Int, exerciseId: Int) {
         viewModelScope.launch {

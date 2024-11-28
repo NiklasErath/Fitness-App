@@ -110,9 +110,9 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         exerciseDao.deleteSession(entity)
     }
 
-    suspend fun getSessionById(sessionId: Int): Session? {
-        return exerciseDao.getSessionById(sessionId)?.let { entity ->
-            // Convert SessionEntity to Session
+
+    suspend fun getSessionById(sessionId: Int): Session {
+        return exerciseDao.getSessionById(sessionId).let { entity ->
             Session(
                 id = entity.id,
                 name = entity.name,
@@ -122,17 +122,20 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     }
 
     suspend fun addExerciseToSession(session: Session, exerciseId: Int) {
-        // update the list of exercises
-        val updatedExercises = session.exercises.toMutableList().apply { add(exerciseId) }
-        // val updated Entity to update the Entity
-        val updatedEntity = SessionEntity(
-            id = session.id,
-            name = session.name,
-            exercises = updatedExercises
-        )
-        exerciseDao.updateSession(
-            updatedEntity
-        )
+        // make shure an exercise isn't twice in the list
+        if (exerciseId !in session.exercises) {
+            // update the list of exercises
+            val updatedExercises = session.exercises.toMutableList().apply { add(exerciseId) }
+            // val updated Entity to update the Entity
+            val updatedEntity = SessionEntity(
+                id = session.id,
+                name = session.name,
+                exercises = updatedExercises
+            )
+            exerciseDao.updateSession(
+                updatedEntity
+            )
+        }
     }
 
 }

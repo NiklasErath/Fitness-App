@@ -58,5 +58,5 @@ interface ExerciseDao {
     suspend fun updateSession(sessionEntity: SessionEntity)
 
     @Query("SELECT * FROM sessions WHERE id = :id")
-    suspend fun getSessionById(id: Int): SessionEntity?
+    suspend fun getSessionById(id: Int): SessionEntity
 }

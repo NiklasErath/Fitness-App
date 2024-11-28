@@ -29,7 +29,7 @@ fun SessionAddExercise(
 
 ) {
     // String? back to an Int or 0
-    val sessionIdInt = sessionId?.toIntOrNull() ?:0
+    val sessionIdInt = sessionId?.toIntOrNull() ?: 0
 
     val viewModel: SessionsViewModel = viewModel(
         factory = SessionViewModelFactory(exerciseRepository)
@@ -53,11 +53,17 @@ fun SessionAddExercise(
         } else {
             Column {
                 OutlinedCard() {
-                    Row { }
-                    exercisesState.exercises.forEach { exercise ->
-                        Text(text = exercise.name)
-                        Button(onClick = {viewModel.addExerciseToSession(sessionIdInt, exercise.id)}) {
-                            Text("+")
+                    Row {
+                        exercisesState.exercises.forEach { exercise ->
+                            Text(text = exercise.name)
+                            Button(onClick = {
+                                viewModel.addExerciseToSession(
+                                    sessionIdInt,
+                                    exercise.id
+                                )
+                            }) {
+                                Text("+")
+                            }
                         }
                     }
                 }

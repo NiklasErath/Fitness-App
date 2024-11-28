@@ -39,6 +39,7 @@ fun ExerciseScreen(
             emptyList()
         )
     )
+
     val exerciseSet by viewModel.exerciseSets.collectAsState(
         initial = ExerciseSetsUiState(
             emptyList()
