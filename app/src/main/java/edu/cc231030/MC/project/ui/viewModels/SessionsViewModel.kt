@@ -37,16 +37,6 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             }
         }
     }
-/*
-    init {
-        val sessionId = 1
-        viewModelScope.launch {
-            val session = repository.getSessionById(sessionId)
-            _currentSession.update { it.copy(currentSession = session) }
-        }
-    }
-
- */
 
     fun getSessionById(sessionId: Int) {
         viewModelScope.launch {

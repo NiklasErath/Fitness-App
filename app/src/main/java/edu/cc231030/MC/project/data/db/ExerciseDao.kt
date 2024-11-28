@@ -43,6 +43,9 @@ interface ExerciseDao {
     @Update
     suspend fun  updateExerciseSet(exerciseSetEntity: ExerciseSetEntity)
 
+    @Query("SELECT * FROM exercises WHERE id = :id")
+    suspend fun getExerciseById(id: Int): ExerciseEntity
+
     //***********************************************************
 
     @Insert
@@ -59,4 +62,6 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM sessions WHERE id = :id")
     suspend fun getSessionById(id: Int): SessionEntity
+
+
 }

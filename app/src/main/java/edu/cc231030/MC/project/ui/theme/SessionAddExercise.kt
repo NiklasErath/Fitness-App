@@ -2,6 +2,7 @@ package edu.cc231030.MC.project.ui.theme
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedCard
@@ -52,9 +53,15 @@ fun SessionAddExercise(
             Text(text = "No exercises available")
         } else {
             Column {
-                OutlinedCard() {
-                    Row {
-                        exercisesState.exercises.forEach { exercise ->
+                exercisesState.exercises.forEach { exercise ->
+                    OutlinedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(12.dp)
+                        ) {
                             Text(text = exercise.name)
                             Button(onClick = {
                                 viewModel.addExerciseToSession(

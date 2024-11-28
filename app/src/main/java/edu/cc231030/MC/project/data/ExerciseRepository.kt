@@ -35,15 +35,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             }
         }
 
-    /*
-    suspend fun addRandomExercise() {
-        exerciseDao.addExercise(
-            ExerciseEntity(0, names.random())
-        )
-
-    }
-
-     */
+    // ******************************************** EXERCISE SET
 
     suspend fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
         exerciseDao.addExerciseSet(
@@ -66,7 +58,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         exerciseDao.updateExerciseSet(entity)
     }
 
-    // *********************************************************************
+    // ********************************************************************* EXERCISE
 
     suspend fun addExercise(name: String) {
         exerciseDao.addExercise(
@@ -80,7 +72,17 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         exerciseDao.deleteExercise(entity)
     }
 
-    // *********************************************
+    suspend fun getExerciseById(exerciseId: Int): Exercise {
+        return exerciseDao.getExerciseById(exerciseId).let { entity ->
+            Exercise(
+                id = entity.id,
+                name = entity.name
+            )
+        }
+    }
+
+
+    // ********************************************* SESSION
 
     val sessions: Flow<List<Session>> = exerciseDao.getAllSessions()
         .map { list ->
@@ -88,16 +90,6 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
                 Session(entity.id, entity.name)
             }
         }
-
-    /*
-        suspend fun addRandomSession() {
-            exerciseDao.addSession(
-                SessionEntity(0, names.random())
-            )
-
-        }
-
-     */
 
     suspend fun addSession(name: String) {
         exerciseDao.addSession(
@@ -141,31 +133,4 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 }
 //***************************************************************
 
-/*
-    fun getExerciseSetsForExercise(exerciseId: Int): Flow<List<ExerciseSet>> {
-        return exerciseDao.getSetsForExercise(exerciseId)
-            .map { list ->
-                list.map { entity ->
-                    ExerciseSet(
-                        id = entity.id,
-                        exerciseId = entity.exerciseId,
-                        reps = entity.reps,
-                        weight = entity.weight
-                    )
-                }
-            }
-    }
-*/
 
-/*
-    suspend fun getSetsforExercise(exerciseId: Int, reps: Int, weight: Int) {
-        exerciseDao.getSetsForExercise(
-            ExerciseSetEntity(0, exerciseId, reps, weight)
-        )
-    }
-
-
-    suspend fun getSetsforExercise(exerciseId: Int) {
-        exerciseDao.getSetsForExercise(exerciseId)
-    }
-*/

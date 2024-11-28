@@ -61,22 +61,7 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
     }
 
 
-    /*
-    fun getSetsforExercise(exerciseId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getSetsforExercise(exerciseId)
-        }
-    }
-*/
-
-/*
-    fun onAddButtonClicked() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addRandomExercise()
-        }
-    }
-*/
-    // *************************************************
+    // ************************************************* EXERCISE
 
     fun addExercise(name: String) {
         viewModelScope.launch {
@@ -90,7 +75,19 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
     }
 
-    // *************************************************
+    fun getExerciseById(exercises: List<Int>) {
+        viewModelScope.launch {
+            // differnece between .map and .forEach =
+            // .map is used to apply a transfromation like in this case a function
+            // .forEach is used to perform an action e.g. printing values or display
+           val exercise =  exercises.map{ exerciseId ->
+                (repository.getExerciseById(exerciseId))}
+            Log.d("Exercise", "This is an exercise: $exercise")
+            _exercises.update { it.copy(exercises = exercise ) }
+        }
+    }
+
+    // ************************************************* EXERCISE SET
 
 
     fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
