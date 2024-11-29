@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
+import edu.cc231030.MC.project.ui.theme.style.paddingButton
 
 @Composable
 fun AddSessionScreen(
@@ -52,13 +53,17 @@ fun AddSessionScreen(
                     navController.popBackStack()
                 }
             },
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(paddingButton)
         ) {
             Text("Create Session")
         }
-        Button(onClick = {
-            navController.navigateUp()
-        }) {
+        Button(
+            onClick = {
+                navController.navigateUp()
+            },
+            modifier = Modifier.padding(paddingButton)
+
+        ) {
             Text("Cancel")
         }
     }

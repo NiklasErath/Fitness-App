@@ -1,4 +1,4 @@
-package edu.cc231030.MC.project.ui.theme
+package edu.cc231030.MC.project.ui.theme.style
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

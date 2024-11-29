@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.States.SessionsUiState
+import edu.cc231030.MC.project.ui.theme.style.paddingButton
 
 
 @Composable
@@ -42,22 +43,32 @@ fun SessionScreen(
         initial = SessionsUiState(emptyList())
     )
 
-
     Column {
+        topAppBar("Sessions", navController = navController)
         Text(text = "Your Sessions:")
         OutlinedCard() {
-            Text(text = "This is already my project setup, but it contains all the requirements for the Demonstrator 2 assignment. I hope that's okay :) The idea is to have sessions that store exercises. Furthermore, the user can add sets to the exercises with 'reps' and 'weight' parameters."
+           /* Text(
+                text = "This is already my project setup, but it contains all the requirements for the Demonstrator 2 assignment. I hope that's okay :) The idea is to have sessions that store exercises. Furthermore, the user can add sets to the exercises with 'reps' and 'weight' parameters."
             )
+            */
         }
-        Button(onClick = {
-            navController.navigate("exerciseScreen")
-        }) {
+
+
+        Button(
+            onClick = {
+                navController.navigate("exerciseScreen")
+            },
+            modifier = Modifier.padding(paddingButton)
+        ) {
             Text("Exercises")
         }
 
-        Button(onClick = {
-            navController.navigate("addSessionScreen")
-        }) {
+        Button(
+            onClick = {
+                navController.navigate("addSessionScreen")
+            },
+            modifier = Modifier.padding(paddingButton)
+        ) {
             Text("Add new Session!")
         }
 

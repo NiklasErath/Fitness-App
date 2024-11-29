@@ -1,4 +1,4 @@
-package edu.cc231030.MC.project.ui.theme
+package edu.cc231030.MC.project.ui.theme.style
 
 import androidx.compose.ui.graphics.Color
 

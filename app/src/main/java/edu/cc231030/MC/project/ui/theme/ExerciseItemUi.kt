@@ -23,6 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import edu.cc231030.MC.project.data.Exercise
 import edu.cc231030.MC.project.data.ExerciseSet
+import edu.cc231030.MC.project.ui.theme.style.paddingButton
+import edu.cc231030.MC.project.ui.theme.style.paddingExercise
+import edu.cc231030.MC.project.ui.theme.style.textFieldHeight
+import edu.cc231030.MC.project.ui.theme.style.textFieldWidth
 
 @Composable
 fun ExerciseItem(
@@ -37,7 +41,7 @@ fun ExerciseItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(paddingExercise),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = exercise.name, modifier = Modifier.weight(1f))
@@ -49,7 +53,7 @@ fun ExerciseItem(
         OutlinedCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp)
+                .padding(paddingExercise)
         ) {
             if (exerciseSet.isNotEmpty()) {
                 // display the sets of the exercise
@@ -62,7 +66,7 @@ fun ExerciseItem(
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(1.dp, Color.Gray)
-                            .padding(12.dp)
+                            .padding(paddingExercise)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -74,8 +78,8 @@ fun ExerciseItem(
                                 onValueChange = { newReps -> setReps.value = newReps },
                                 label = { Text("${set.reps} x") },
                                 modifier = Modifier
-                                    .width(60.dp)
-                                    .height(80.dp)
+                                    .width(textFieldWidth)
+                                    .height(textFieldHeight)
                             )
                             Text(text = "Weight")
                             TextField(
@@ -83,8 +87,8 @@ fun ExerciseItem(
                                 onValueChange = { newWeight -> setWeight.value = newWeight },
                                 label = { Text("${set.weight} kg") },
                                 modifier = Modifier
-                                    .width(60.dp)
-                                    .height(80.dp)
+                                    .width(textFieldWidth)
+                                    .height(textFieldHeight)
                             )
                             Button(
                                 onClick = {
@@ -92,12 +96,16 @@ fun ExerciseItem(
                                     val repsInt = setReps.value.toIntOrNull() ?: 0
                                     val weightInt = setWeight.value.toIntOrNull() ?: 0
                                     onUpdateSet(set.id, set.exerciseId, repsInt, weightInt)
-                                }
+                                }, modifier = Modifier.padding(paddingButton)
+
                             ) {
                                 Text(text = "Save")
                             }
 
-                            Button(onClick = { onDeleteSet(set) }) {
+                            Button(
+                                onClick = { onDeleteSet(set) },
+                                modifier = Modifier.padding(paddingButton)
+                            ) {
                                 Text(text = "X")
                             }
                         }
@@ -110,7 +118,7 @@ fun ExerciseItem(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp),
+                    .padding(paddingButton),
                 onClick = { onAddSet(exercise.id, 0, 0) }
             ) {
                 Text(text = "Add Set")

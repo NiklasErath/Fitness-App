@@ -24,6 +24,7 @@ import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
 
@@ -73,12 +74,13 @@ fun SessionIdScreen(
         viewModel.getSessionById(sessionIdInt)
     }
     Column {
-        Text(text = "${currentSession.name}")
-        if (exercisesState.exercises.isEmpty()) {
-            Text(text = "No exercises available", modifier = modifier)
-        } else {
-            // display exercises on the screen
-            LazyColumn {
+        topAppBar("${currentSession.name} Session", navController = navController)
+        LazyColumn {
+            if (exercisesState.exercises.isEmpty()) {
+                item { Text(text = "No exercises available", modifier = modifier) }
+            } else {
+                // display exercises on the screen
+
                 // itemsIndexed iterates over the exercise List while providing both the index and the element at each iteration - index is order , element the objects
                 itemsIndexed(exercisesState.exercises) { index, exercise ->
                     val correspondingExerciseSets =
@@ -92,7 +94,12 @@ fun SessionIdScreen(
                         ExerciseItem(
                             exercise = exercise,
                             exerciseSet = correspondingExerciseSets,
-                            onDelete = { exercise -> viewModel.deleteExerciseFromSession(sessionIdInt, exercise.id) },
+                            onDelete = { exercise ->
+                                viewModel.deleteExerciseFromSession(
+                                    sessionIdInt,
+                                    exercise.id
+                                )
+                            },
                             onDeleteSet = { exerciseSet ->
                                 exerciseViewModel.deleteExerciseSet(
                                     exerciseSet
@@ -117,25 +124,43 @@ fun SessionIdScreen(
                     }
                 }
             }
-        }
-        Button(onClick = {
-            navController.navigate("sessionAddExercise/${sessionId}")
-        }) {
-            Text("Add Exercises")
-        }
-        Button(onClick = {
-             viewModel.deleteSession(sessionIdInt)
-            navController.navigate("SessionScreen")
-        }) {
-            Text("Delete Sesssion")
 
-        }
-        Button(onClick = {
-            navController.navigateUp()
-        }) {
-            Text("Back")
+            item {
+                Button(
+                    onClick = {
+                        navController.navigate("sessionAddExercise/${sessionId}")
+                    },
+                    modifier = Modifier.padding(paddingButton)
+                ) {
+                    Text("Add Exercises")
+                }
+            }
+            item {
+                Button(
+                    onClick = {
+                        viewModel.deleteSession(sessionIdInt)
+                        navController.navigate("SessionScreen")
+                    },
+                    modifier = Modifier.padding(paddingButton)
+                ) {
+                    Text("Delete Sesssion")
 
+                }
+            }
+            item {
+                Button(
+                    onClick = {
+                        navController.navigateUp()
+                    },
+                    modifier = Modifier.padding(paddingButton)
+                ) {
+                    Text("Back")
+
+                }
+            }
         }
+
     }
 }
+
 

@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import edu.cc231030.MC.project.ui.TrainingApp
-import edu.cc231030.MC.project.ui.theme.MobileCodingProjectTheme
+import edu.cc231030.MC.project.ui.theme.style.MobileCodingProjectTheme
 
 private const val TAG = "MainActivity"
 

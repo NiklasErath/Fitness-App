@@ -21,6 +21,7 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.paddingButton
 
 // Ui for the Main Screen
 @Composable
@@ -48,16 +49,22 @@ fun ExerciseScreen(
 
 
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Button(onClick = {
-            navController.navigate("addExerciseScreen")
-          //  viewModel.onAddButtonClicked()
-        }) {
+        Button(
+            onClick = {
+                navController.navigate("addExerciseScreen")
+                //  viewModel.onAddButtonClicked()
+            },
+            modifier = Modifier.padding(paddingButton)
+        ) {
             Text("Add new Exercise!")
         }
-        Button(onClick = {
-            navController.navigate("SessionScreen")
-      //      viewModel.onAddButtonClicked()
-        }) {
+        Button(
+            onClick = {
+                navController.navigate("SessionScreen")
+                //      viewModel.onAddButtonClicked()
+            },
+            modifier = Modifier.padding(paddingButton)
+        ) {
             Text("SessionScreen")
         }
 
@@ -103,9 +110,12 @@ fun ExerciseScreen(
                 }
             }
         }
-        Button(onClick = {
-            navController.navigateUp()
-        }) {
+        Button(
+            onClick = {
+                navController.navigateUp()
+            },
+            modifier = Modifier.padding(paddingButton)
+        ) {
             Text("Back")
         }
     }

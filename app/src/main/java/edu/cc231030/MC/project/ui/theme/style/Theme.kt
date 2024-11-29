@@ -1,6 +1,5 @@
-package edu.cc231030.MC.project.ui.theme
+package edu.cc231030.MC.project.ui.theme.style
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

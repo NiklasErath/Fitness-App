@@ -1,5 +1,6 @@
 package edu.cc231030.MC.project.ui.theme
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 
@@ -60,15 +62,21 @@ fun SessionAddExercise(
                             .padding(12.dp)
                     ) {
                         Row(
-                            modifier = Modifier.padding(12.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(text = exercise.name)
-                            Button(onClick = {
-                                viewModel.addExerciseToSession(
-                                    sessionIdInt,
-                                    exercise.id
-                                )
-                            }) {
+                            Button(
+                                onClick = {
+                                    viewModel.addExerciseToSession(
+                                        sessionIdInt,
+                                        exercise.id
+                                    )
+                                },
+                                modifier = Modifier.padding(paddingButton)
+                            ) {
                                 Text("+")
                             }
                         }
@@ -76,15 +84,21 @@ fun SessionAddExercise(
                 }
             }
         }
-        Button(onClick = {
-            navController.navigate("ExerciseScreen")
-        }) {
+        Button(
+            onClick = {
+                navController.navigate("ExerciseScreen")
+            },
+            modifier = Modifier.padding(paddingButton)
+        ) {
             Text("All Exercises")
         }
 
-        Button(onClick = {
-            navController.navigateUp()
-        }) {
+        Button(
+            onClick = {
+                navController.navigateUp()
+            },
+            modifier = Modifier.padding(paddingButton)
+        ) {
             Text("Back")
         }
 

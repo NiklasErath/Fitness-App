@@ -1,9 +1,12 @@
 package edu.cc231030.MC.project.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,9 +21,7 @@ import edu.cc231030.MC.project.ui.theme.SessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionIdScreen
 import edu.cc231030.MC.project.ui.theme.AddSessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionAddExercise
-
-
-
+import edu.cc231030.MC.project.ui.theme.topAppBar
 
 
 enum class Routes(val route: String) {
@@ -39,7 +40,6 @@ fun TrainingApp(modifier: Modifier = Modifier) {
     val database = ExerciseDatabase.getDatabase(context)
     val dao = database.exerciseDao()
     val exerciseRepository = ExerciseRepository(dao)
-
 
     // Box for the padding/modifier from the MainActivity
     Box(modifier = modifier) {
