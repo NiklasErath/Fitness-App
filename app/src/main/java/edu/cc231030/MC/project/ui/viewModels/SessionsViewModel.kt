@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import android.util.Log
 import edu.cc231030.MC.project.data.ExerciseRepository
+import edu.cc231030.MC.project.data.Session
 import edu.cc231030.MC.project.ui.States.SessionsUiState
 import edu.cc231030.MC.project.ui.States.currentSessionUiState
 import kotlinx.coroutines.flow.update
@@ -55,6 +56,13 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
     }
 
+    fun deleteSession(sessionId: Int){
+        viewModelScope.launch {
+            val session = repository.getSessionById(sessionId)
+            repository.deleteSession(session)
+        }
+    }
+
 
     // *******************************************************************
 
@@ -65,6 +73,19 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             if (session != null) {
                 repository.addExerciseToSession(session, exerciseId)
             }
+        }
+    }
+
+    fun deleteExerciseFromSession(sessionId: Int, exerciseId: Int) {
+        viewModelScope.launch {
+            // fetch the session by Id to update the whole entity
+            val session = repository.getSessionById(sessionId)
+            if (session != null) {
+                repository.deleteExerciseFromSession(session, exerciseId)
+            }
+            val newSession = repository.getSessionById(sessionId)
+
+            _currentSession.update{ it.copy(currentSession = newSession) }
         }
     }
 }

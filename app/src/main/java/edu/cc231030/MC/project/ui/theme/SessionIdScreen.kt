@@ -92,7 +92,7 @@ fun SessionIdScreen(
                         ExerciseItem(
                             exercise = exercise,
                             exerciseSet = correspondingExerciseSets,
-                            onDelete = { exercise -> exerciseViewModel.deleteExercise(exercise) },
+                            onDelete = { exercise -> viewModel.deleteExerciseFromSession(sessionIdInt, exercise.id) },
                             onDeleteSet = { exerciseSet ->
                                 exerciseViewModel.deleteExerciseSet(
                                     exerciseSet
@@ -123,7 +123,13 @@ fun SessionIdScreen(
         }) {
             Text("Add Exercises")
         }
+        Button(onClick = {
+             viewModel.deleteSession(sessionIdInt)
+            navController.navigate("SessionScreen")
+        }) {
+            Text("Delete Sesssion")
 
+        }
         Button(onClick = {
             navController.navigateUp()
         }) {
