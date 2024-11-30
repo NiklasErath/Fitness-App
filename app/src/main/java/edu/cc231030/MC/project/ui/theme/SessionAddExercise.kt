@@ -49,7 +49,9 @@ fun SessionAddExercise(
     )
 
 
-    Column(modifier = modifier.padding(16.dp)) {
+    Column() {
+        topAppBar("Add new Exercise", navController = navController)
+
         Text(text = "Session ID: $sessionId")
         if (exercisesState.exercises.isEmpty()) {
             Text(text = "No exercises available")

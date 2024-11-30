@@ -18,8 +18,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import edu.cc231030.MC.project.data.Exercise
 import edu.cc231030.MC.project.data.ExerciseSet
@@ -27,6 +29,7 @@ import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.theme.style.paddingExercise
 import edu.cc231030.MC.project.ui.theme.style.textFieldHeight
 import edu.cc231030.MC.project.ui.theme.style.textFieldWidth
+import edu.cc231030.MC.project.ui.theme.style.StyledTextField
 
 @Composable
 fun ExerciseItem(
@@ -68,45 +71,51 @@ fun ExerciseItem(
                             .border(1.dp, Color.Gray)
                             .padding(paddingExercise)
                     ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceAround
-                        ) {
-                            Text(text = "Reps")
-                            TextField(
-                                value = setReps.value,
-                                onValueChange = { newReps -> setReps.value = newReps },
-                                label = { Text("${set.reps} x") },
-                                modifier = Modifier
-                                    .width(textFieldWidth)
-                                    .height(textFieldHeight)
-                            )
-                            Text(text = "Weight")
-                            TextField(
-                                value = setWeight.value,
-                                onValueChange = { newWeight -> setWeight.value = newWeight },
-                                label = { Text("${set.weight} kg") },
-                                modifier = Modifier
-                                    .width(textFieldWidth)
-                                    .height(textFieldHeight)
-                            )
-                            Button(
-                                onClick = {
-                                    // convert reps and weight to Int or Null
-                                    val repsInt = setReps.value.toIntOrNull() ?: 0
-                                    val weightInt = setWeight.value.toIntOrNull() ?: 0
-                                    onUpdateSet(set.id, set.exerciseId, repsInt, weightInt)
-                                }, modifier = Modifier.padding(paddingButton)
-
+                        Column {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceAround
                             ) {
-                                Text(text = "Save")
-                            }
+                                Column{
+                                Text(
+                                    text = "Reps",
+                                    textAlign = TextAlign.Center)
+                                StyledTextField(
+                                    value = setReps.value,
+                                    onValueChange = { newReps -> setReps.value = newReps },
+                                    label = "${set.reps} x",
+                                    modifier = Modifier
+                                )}
+                                Column {
+                                Text(text = "Weight",
+                                    textAlign = TextAlign.Center,
+                                )
+                                    TextField(
+                                    value = setWeight.value,
+                                    onValueChange = { newWeight -> setWeight.value = newWeight },
+                                    label = { Text("${set.weight} kg") },
+                                    modifier = Modifier
+                                        .width(textFieldWidth)
+                                        .height(textFieldHeight)
+                                )}
+                                Button(
+                                    onClick = {
+                                        // convert reps and weight to Int or Null
+                                        val repsInt = setReps.value.toIntOrNull() ?: 0
+                                        val weightInt = setWeight.value.toIntOrNull() ?: 0
+                                        onUpdateSet(set.id, set.exerciseId, repsInt, weightInt)
+                                    }, modifier = Modifier.padding(paddingButton)
 
-                            Button(
-                                onClick = { onDeleteSet(set) },
-                                modifier = Modifier.padding(paddingButton)
-                            ) {
-                                Text(text = "X")
+                                ) {
+                                    Text(text = "Save")
+                                }
+
+                                Button(
+                                    onClick = { onDeleteSet(set) },
+                                    modifier = Modifier.padding(paddingButton)
+                                ) {
+                                    Text(text = "X")
+                                }
                             }
                         }
                     }

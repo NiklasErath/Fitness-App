@@ -31,11 +31,9 @@ fun AddSessionScreen(
     )
 
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
+    Column() {
+        topAppBar("Add New Session", navController = navController)
+
         Text(text = "Add New Session")
 
         OutlinedTextField(

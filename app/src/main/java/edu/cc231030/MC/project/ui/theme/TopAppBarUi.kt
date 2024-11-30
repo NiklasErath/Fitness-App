@@ -2,9 +2,11 @@ package edu.cc231030.MC.project.ui.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,12 +26,16 @@ fun topAppBar(title: String, navController: NavController) {
             .background(Color.Black),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Button(
-            onClick = { navController.navigateUp() },
-            modifier = Modifier
-                .padding(start = 8.dp)
-        ) {
-            Text(text = "Back")
+        if ("$title" != "Sessions") {
+            Button(
+                onClick = { navController.navigateUp() },
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            ) {
+                Text(text = "Back")
+            }
+        } else {
+            Spacer(modifier = Modifier.width(72.dp)) // 72 is placeholder length for the back button - chatgpt calculated lol
         }
         Text(
             text = "$title", modifier = Modifier

@@ -49,6 +49,8 @@ fun ExerciseScreen(
 
 
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+        topAppBar("Exercises", navController = navController)
+
         Button(
             onClick = {
                 navController.navigate("addExerciseScreen")

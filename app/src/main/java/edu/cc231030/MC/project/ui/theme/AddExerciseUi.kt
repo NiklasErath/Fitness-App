@@ -31,11 +31,9 @@ fun AddExerciseScreen(
     )
 
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
+    Column() {
+        topAppBar("Add New Exercise", navController = navController)
+
         Text(text = "Add New Exercise")
 
         OutlinedTextField(
