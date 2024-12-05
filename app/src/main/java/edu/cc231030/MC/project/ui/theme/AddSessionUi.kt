@@ -26,13 +26,14 @@ fun AddSessionScreen(
 ) {
     // remember to store the state, and directly access the value.
     val sessionName = remember { mutableStateOf("") }
+    val sessionDescription = remember { mutableStateOf("") }
     val viewModel: SessionsViewModel = viewModel(
         factory = SessionViewModelFactory(exerciseRepository)
     )
 
 
     Column() {
-        topAppBar("Add New Session", navController = navController)
+        topAppBar("Add New Session", navController = navController,"no")
 
         Text(text = "Add New Session")
 
@@ -42,13 +43,19 @@ fun AddSessionScreen(
             label = { Text("Session Name") }
         )
 
+        OutlinedTextField(
+            value = sessionDescription.value,
+            onValueChange = { newDescription -> sessionDescription.value = newDescription },
+            label = { Text("Session Description") }
+        )
+
         Button(
             onClick = {
                 if (sessionName.value.isNotEmpty()) {
-                    //pass the name to the function to create a new exercise
-                    viewModel.addSession(sessionName.value)
+                    //pass the name and description to the function to create a new session
+                    viewModel.addSession(sessionName.value, sessionDescription.value)
                     //navigate back to previous Screen
-                    navController.popBackStack()
+                    navController.navigate("SessionScreen")
                 }
             },
             modifier = Modifier.padding(paddingButton)

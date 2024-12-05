@@ -4,5 +4,6 @@ import androidx.compose.ui.unit.dp
 
 val paddingExercise = 12.dp
 val textFieldHeight = 24.dp
-val textFieldWidth = 60.dp
+val textFieldWidth = 44.dp
 val paddingButton = 12.dp
+val paddingScreen = 12.dp

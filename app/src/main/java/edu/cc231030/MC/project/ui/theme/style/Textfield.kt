@@ -1,6 +1,7 @@
 package edu.cc231030.MC.project.ui.theme.style
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,13 +25,14 @@ fun StyledTextField(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
+    extra: String
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         BasicTextField(
             value = value,
             onValueChange = onValueChange,
             textStyle = TextStyle(
-                textAlign = TextAlign.End, // Align the value text to the right
+                textAlign = TextAlign.End,
                 color = Color.Black,
                 fontSize = 24.sp
             ),
@@ -38,11 +40,11 @@ fun StyledTextField(
             modifier = Modifier
                 .width(textFieldWidth)
                 .height(textFieldHeight)
-                .background(Color.Magenta)
+                .background(Color.Gray),
         )
 
         Text(
-            text = " x",
+            text = extra,
             style = TextStyle(color = Color.Black)
         )
     }

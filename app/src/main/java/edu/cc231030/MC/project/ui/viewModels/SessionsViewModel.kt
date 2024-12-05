@@ -50,9 +50,9 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
     }
 
-    fun addSession(name: String) {
+    fun addSession(name: String, description: String) {
         viewModelScope.launch {
-            repository.addSession(name)
+            repository.addSession(name, description)
         }
     }
 

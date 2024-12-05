@@ -1,12 +1,15 @@
 package edu.cc231030.MC.project.ui.theme
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -24,6 +28,7 @@ import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
@@ -74,7 +79,7 @@ fun SessionIdScreen(
         viewModel.getSessionById(sessionIdInt)
     }
     Column {
-        topAppBar("${currentSession.name} Session", navController = navController)
+        topAppBar("${currentSession.name} Session", navController = navController, navigation = "sessionAddExercise/${sessionId}")
         LazyColumn {
             if (exercisesState.exercises.isEmpty()) {
                 item { Text(text = "No exercises available", modifier = modifier) }
@@ -89,7 +94,10 @@ fun SessionIdScreen(
                     OutlinedCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(10.dp)
+                            .padding(10.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = ItemBackground
+                        )
                     ) {
                         ExerciseItem(
                             exercise = exercise,
@@ -131,6 +139,7 @@ fun SessionIdScreen(
                         navController.navigate("sessionAddExercise/${sessionId}")
                     },
                     modifier = Modifier.padding(paddingButton)
+                        .fillMaxWidth()
                 ) {
                     Text("Add Exercises")
                 }
@@ -142,8 +151,9 @@ fun SessionIdScreen(
                         navController.navigate("SessionScreen")
                     },
                     modifier = Modifier.padding(paddingButton)
+                        .fillMaxWidth()
                 ) {
-                    Text("Delete Sesssion")
+                    Text("Delete Session")
 
                 }
             }
@@ -153,8 +163,9 @@ fun SessionIdScreen(
                         navController.navigateUp()
                     },
                     modifier = Modifier.padding(paddingButton)
+                        .fillMaxWidth()
                 ) {
-                    Text("Back")
+                    Text("Finish Workout")
 
                 }
             }

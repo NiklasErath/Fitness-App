@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -50,7 +51,7 @@ fun SessionAddExercise(
 
 
     Column() {
-        topAppBar("Add new Exercise", navController = navController)
+        topAppBar("Add new Exercise", navController = navController, "no")
 
         Text(text = "Session ID: $sessionId")
         if (exercisesState.exercises.isEmpty()) {
@@ -63,23 +64,32 @@ fun SessionAddExercise(
                             .fillMaxWidth()
                             .padding(12.dp)
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(text = exercise.name)
-                            Button(
-                                onClick = {
-                                    viewModel.addExerciseToSession(
-                                        sessionIdInt,
-                                        exercise.id
-                                    )
-                                },
-                                modifier = Modifier.padding(paddingButton)
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("+")
+                                Text(text = exercise.name)
+                                Button(
+                                    onClick = {
+                                        viewModel.addExerciseToSession(
+                                            sessionIdInt,
+                                            exercise.id
+                                        )
+                                        navController.navigate("SessionIdScreen/${sessionId}")
+                                    },
+                                ) {
+                                    Text("+")
+                                }
+                            }
+                            if (exercise.description != "") {
+                                Text(
+                                    text = "Description: " + exercise.description,
+                                    modifier = Modifier.padding(12.dp)
+                                )
                             }
                         }
                     }

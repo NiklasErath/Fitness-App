@@ -11,5 +11,6 @@ data class SessionEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val name: String,
-    val exercises: List<Int> = emptyList()
+    val exercises: List<Int> = emptyList(),
+    val description: String,
 )

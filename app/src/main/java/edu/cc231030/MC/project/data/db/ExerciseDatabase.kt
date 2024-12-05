@@ -10,7 +10,7 @@ import edu.cc231030.MC.project.data.db.Entities.ExerciseSetEntity
 import edu.cc231030.MC.project.data.db.Entities.SessionEntity
 
 // add here new entities
-@Database(entities = [ExerciseEntity::class, ExerciseSetEntity::class, SessionEntity::class], version = 5, exportSchema = false)
+@Database(entities = [ExerciseEntity::class, ExerciseSetEntity::class, SessionEntity::class], version = 7, exportSchema = false)
 @TypeConverters(Converters::class) // Register your converters here
 abstract class ExerciseDatabase : RoomDatabase() {
 

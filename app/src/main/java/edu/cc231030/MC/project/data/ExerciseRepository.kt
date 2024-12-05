@@ -23,7 +23,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             Log.d("ExerciseSets", "Fetched exercises: $list")  // Log the raw list from the DAO
 
             list.map { entity ->
-                Exercise(entity.id, entity.name) // Map to Exercise model
+                Exercise(entity.id, entity.name, entity.description) // Map to Exercise model
             }
         }
 
@@ -60,15 +60,15 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
     // ********************************************************************* EXERCISE
 
-    suspend fun addExercise(name: String) {
+    suspend fun addExercise(name: String, description: String) {
         exerciseDao.addExercise(
-            ExerciseEntity(0, name)
+            ExerciseEntity(0, name, description)
         )
     }
 
 
     suspend fun deleteExercise(exercise: Exercise) {
-        val entity = ExerciseEntity(id = exercise.id, name = exercise.name)
+        val entity = ExerciseEntity(id = exercise.id, name = exercise.name, description = exercise.description)
         exerciseDao.deleteExercise(entity)
     }
 
@@ -76,7 +76,8 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         return exerciseDao.getExerciseById(exerciseId).let { entity ->
             Exercise(
                 id = entity.id,
-                name = entity.name
+                name = entity.name,
+                description = entity.description,
             )
         }
     }
@@ -87,18 +88,18 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     val sessions: Flow<List<Session>> = exerciseDao.getAllSessions()
         .map { list ->
             list.map { entity ->
-                Session(entity.id, entity.name)
+                Session(entity.id, entity.name,entity.exercises, entity.description)
             }
         }
 
-    suspend fun addSession(name: String) {
+    suspend fun addSession(name: String, description: String) {
         exerciseDao.addSession(
-            SessionEntity(0, name)
+            SessionEntity(0, name, emptyList(), description)
         )
     }
 
     suspend fun deleteSession(session: Session) {
-        val entity = SessionEntity(id = session.id, name = session.name)
+        val entity = SessionEntity(id = session.id, name = session.name, description = session.description)
         exerciseDao.deleteSession(entity)
     }
 
@@ -108,7 +109,8 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             Session(
                 id = entity.id,
                 name = entity.name,
-                exercises = entity.exercises
+                exercises = entity.exercises,
+                description = entity.description
             )
         }
     }
@@ -122,7 +124,8 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             val updatedEntity = SessionEntity(
                 id = session.id,
                 name = session.name,
-                exercises = updatedExercises
+                exercises = updatedExercises,
+                description = session.description
             )
             exerciseDao.updateSession(
                 updatedEntity
@@ -140,7 +143,8 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             val updatedEntity = SessionEntity(
                 id = session.id,
                 name = session.name,
-                exercises = updatedExercises
+                exercises = updatedExercises,
+                description = session.description
             )
             exerciseDao.updateSession(
                 updatedEntity

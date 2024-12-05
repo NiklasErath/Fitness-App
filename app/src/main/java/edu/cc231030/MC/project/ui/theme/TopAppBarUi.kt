@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun topAppBar(title: String, navController: NavController) {
+fun topAppBar(title: String, navController: NavController, navigation: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,11 +43,15 @@ fun topAppBar(title: String, navController: NavController) {
             color = Color.White,
             textAlign = TextAlign.Center
         )
-        Button(
-            onClick = { navController.navigateUp() },
-            modifier = Modifier.padding(end = 8.dp)
-        ) {
-            Text(text = "Back")
+        if (navigation == "no") {
+            Spacer(modifier = Modifier.width(72.dp)) // 72 is placeholder length for the back button - chatgpt calculated lol
+        } else {
+            Button(
+                onClick = { navController.navigate(navigation) },
+                modifier = Modifier.padding(end = 8.dp)
+            ) {
+                Text(text = "Add")
+            }
         }
     }
 

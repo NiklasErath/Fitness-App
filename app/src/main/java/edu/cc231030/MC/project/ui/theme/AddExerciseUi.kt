@@ -26,13 +26,14 @@ fun AddExerciseScreen(
 ) {
     // remember to store the state, and directly access the value.
     val exerciseName = remember { mutableStateOf("") }
+    val exerciseDescription = remember { mutableStateOf("") }
     val viewModel: ExerciseViewModel = viewModel(
         factory = ExerciseViewModelFactory(exerciseRepository)
     )
 
 
     Column() {
-        topAppBar("Add New Exercise", navController = navController)
+        topAppBar("Add New Exercise", navController = navController, "no")
 
         Text(text = "Add New Exercise")
 
@@ -41,12 +42,17 @@ fun AddExerciseScreen(
             onValueChange = { newName -> exerciseName.value = newName },
             label = { Text("Exercise Name") }
         )
+        OutlinedTextField(
+            value = exerciseDescription.value,
+            onValueChange = { newDescription -> exerciseDescription.value = newDescription },
+            label = { Text("Exercise Description") }
+        )
 
         Button(
             onClick = {
                 if (exerciseName.value.isNotEmpty()) {
                     //pass the name to the function to create a new exercise
-                    viewModel.addExercise(exerciseName.value)
+                    viewModel.addExercise(exerciseName.value, exerciseDescription.value)
                     // navigate back to previous Screen
                     navController.popBackStack()
                 }

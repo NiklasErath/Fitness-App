@@ -63,9 +63,9 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
 
     // ************************************************* EXERCISE
 
-    fun addExercise(name: String) {
+    fun addExercise(name: String, description: String) {
         viewModelScope.launch {
-            repository.addExercise(name)
+            repository.addExercise(name, description)
         }
     }
 
