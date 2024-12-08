@@ -37,6 +37,10 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
     // ******************************************** EXERCISE SET
 
+    suspend fun getSetForExerciseId(exerciseId: Int): ExerciseSetEntity {
+        return exerciseDao.getSetForExerciseId(exerciseId)
+    }
+
     suspend fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
         exerciseDao.addExerciseSet(
             ExerciseSetEntity(0, exerciseId, reps, weight)

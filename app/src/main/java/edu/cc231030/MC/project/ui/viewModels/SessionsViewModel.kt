@@ -42,7 +42,6 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
     fun getSessionById(sessionId: Int) {
         viewModelScope.launch {
             val session = repository.getSessionById(sessionId)
-            Log.d("Sessions", "Collected Sessionsetrea: $session")
             _currentSession.update { it.copy(currentSession = session) }
             Log.d("Sessions", "Collected Sessionsetrea: $session")
 

@@ -93,11 +93,13 @@ fun ExerciseScreen(
                                     reps,
                                     weight
                                 )
-                            }
+                            },
+                            screen = "exercise"
                         )
                     }
                 }
             }
+            /*
             item {
                 Button(
                     onClick = {
@@ -113,6 +115,8 @@ fun ExerciseScreen(
                 }
 
             }
+
+             */
             item {
                 Button(
                     onClick = {

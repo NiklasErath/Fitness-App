@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.States.SessionsUiState
+import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.theme.style.paddingScreen
 
@@ -77,6 +79,9 @@ fun SessionScreen(
                         OutlinedCard(
                             modifier = Modifier
                                 .fillMaxWidth(),
+                            colors = CardDefaults.cardColors(
+                                containerColor = ItemBackground
+                            )
                             /*   onClick = {
                                    navController.navigate("SessionIdScreen/${session.id}")
                                }
@@ -103,10 +108,18 @@ fun SessionScreen(
                                     }
                                 }
                                 if (session.description != "") {
-                                Text(
-                                    text ="Description: " + session.description, modifier = Modifier.padding(
-                                        paddingButton)                              )
-                            }
+                                    OutlinedCard(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
+                                        Text(text = "Description:",
+                                            modifier = Modifier.padding(
+                                                10.dp
+                                            ))
+                                        Text(text = session.description,
+                                            modifier = Modifier.padding(
+                                                10.dp
+                                            )
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

@@ -3,6 +3,7 @@ package edu.cc231030.MC.project.ui.theme
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -40,12 +41,16 @@ fun AddExerciseScreen(
         OutlinedTextField(
             value = exerciseName.value,
             onValueChange = { newName -> exerciseName.value = newName },
-            label = { Text("Exercise Name") }
+            label = { Text("Exercise Name") },
+            modifier = Modifier.padding(12.dp)
+                .fillMaxWidth()
         )
         OutlinedTextField(
             value = exerciseDescription.value,
             onValueChange = { newDescription -> exerciseDescription.value = newDescription },
-            label = { Text("Exercise Description") }
+            label = { Text("Exercise Description") },
+            modifier = Modifier.padding(12.dp)
+                .fillMaxWidth()
         )
 
         Button(
@@ -58,6 +63,7 @@ fun AddExerciseScreen(
                 }
             },
             modifier = Modifier.padding(paddingButton)
+                .fillMaxWidth()
         ) {
             Text("Create Exercise")
         }
@@ -66,6 +72,7 @@ fun AddExerciseScreen(
                 navController.navigateUp()
             },
             modifier = Modifier.padding(paddingButton)
+                .fillMaxWidth()
         ) {
             Text("Cancel")
         }

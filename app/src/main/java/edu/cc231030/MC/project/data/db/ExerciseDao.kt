@@ -23,16 +23,23 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM exercises")
     fun findAllExercises(): Flow<List<ExerciseEntity>>
-/*
-    @Query("SELECT * FROM exerciseSets WHERE exerciseId = :exerciseId")
-    fun getSetsForExercise(exerciseId: Int): Flow<List<ExerciseSetEntity>>
-*/
+
+    @Query("SELECT * FROM exercises WHERE id = :id")
+    suspend fun getExerciseById(id: Int): ExerciseEntity
+
+    /*
+        @Query("SELECT * FROM exerciseSets WHERE exerciseId = :exerciseId")
+        fun getSetsForExercise(exerciseId: Int): Flow<List<ExerciseSetEntity>>
+    */
 
 
     //***********************************************************
 
     @Query("SELECT * FROM exerciseSets")
     fun getSetsForExercise(): Flow<List<ExerciseSetEntity>>
+
+    @Query("SELECT * FROM exerciseSets WHERE exerciseId = :id")
+    suspend fun getSetForExerciseId(id: Int): ExerciseSetEntity
 
     @Insert
     suspend fun addExerciseSet(exerciseSetEntity: ExerciseSetEntity)
@@ -42,9 +49,6 @@ interface ExerciseDao {
 
     @Update
     suspend fun  updateExerciseSet(exerciseSetEntity: ExerciseSetEntity)
-
-    @Query("SELECT * FROM exercises WHERE id = :id")
-    suspend fun getExerciseById(id: Int): ExerciseEntity
 
     //***********************************************************
 

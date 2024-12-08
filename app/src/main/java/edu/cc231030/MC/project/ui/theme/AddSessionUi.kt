@@ -3,6 +3,7 @@ package edu.cc231030.MC.project.ui.theme
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -32,7 +33,7 @@ fun AddSessionScreen(
     )
 
 
-    Column() {
+    Column {
         topAppBar("Add New Session", navController = navController,"no")
 
         Text(text = "Add New Session")
@@ -40,13 +41,17 @@ fun AddSessionScreen(
         OutlinedTextField(
             value = sessionName.value,
             onValueChange = { newName -> sessionName.value = newName },
-            label = { Text("Session Name") }
+            label = { Text("Session Name") },
+            modifier = Modifier.padding(12.dp)
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
             value = sessionDescription.value,
             onValueChange = { newDescription -> sessionDescription.value = newDescription },
-            label = { Text("Session Description") }
+            label = { Text("Session Description") },
+                    modifier = Modifier.padding(12.dp)
+                        .fillMaxWidth()
         )
 
         Button(
@@ -59,6 +64,7 @@ fun AddSessionScreen(
                 }
             },
             modifier = Modifier.padding(paddingButton)
+                .fillMaxWidth()
         ) {
             Text("Create Session")
         }
@@ -67,6 +73,7 @@ fun AddSessionScreen(
                 navController.navigateUp()
             },
             modifier = Modifier.padding(paddingButton)
+                .fillMaxWidth()
 
         ) {
             Text("Cancel")

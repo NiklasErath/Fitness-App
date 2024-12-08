@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -20,6 +22,7 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
@@ -62,7 +65,10 @@ fun SessionAddExercise(
                     OutlinedCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(12.dp)
+                            .padding(12.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = ItemBackground
+                        )
                     ) {
                         Column {
                             Row(
@@ -72,7 +78,9 @@ fun SessionAddExercise(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(text = exercise.name)
+                                Text(text = exercise.name,
+                                    color = Color.Black
+                                )
                                 Button(
                                     onClick = {
                                         viewModel.addExerciseToSession(

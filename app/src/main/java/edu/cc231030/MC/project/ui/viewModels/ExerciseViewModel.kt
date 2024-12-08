@@ -7,6 +7,7 @@ import edu.cc231030.MC.project.data.Exercise
 import edu.cc231030.MC.project.data.ExerciseSet
 
 import edu.cc231030.MC.project.data.ExerciseRepository
+import edu.cc231030.MC.project.data.db.Entities.ExerciseSetEntity
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,17 +78,27 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
 
     fun getExerciseById(exercises: List<Int>) {
         viewModelScope.launch {
-            // differnece between .map and .forEach =
-            // .map is used to apply a transfromation like in this case a function
+            // difference between .map and .forEach =
+            // .map is used to apply a transformation like in this case a function
             // .forEach is used to perform an action e.g. printing values or display
-           val exercise =  exercises.map{ exerciseId ->
-                (repository.getExerciseById(exerciseId))}
+            val exercise = exercises.map { exerciseId ->
+                (repository.getExerciseById(exerciseId))
+            }
             Log.d("Exercise", "This is an exercise: $exercise")
-            _exercises.update { it.copy(exercises = exercise ) }
+            _exercises.update { it.copy(exercises = exercise) }
         }
     }
 
     // ************************************************* EXERCISE SET
+
+    fun getSetForExerciseId(exerciseId: Int) {
+        viewModelScope.launch {
+            val set = repository.getSetForExerciseId(exerciseId)
+            Log.d("set", "set = $set")
+            //updateExerciseSet(id = set.id, exerciseId =set.exerciseId, reps = set.reps, weight = set.weight )
+           // _sets.update { it.copy(exerciseSet = set) }
+        }
+    }
 
 
     fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
@@ -96,18 +107,26 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
         }
     }
 
-    fun updateExerciseSet(id: Int, exerciseId: Int, reps: Int, weight: Int){
+    fun updateExerciseSet(id: Int, exerciseId: Int, reps: Int, weight: Int) {
         viewModelScope.launch {
             repository.updateExerciseSet(id, exerciseId, reps, weight)
         }
     }
+    /*
+        fun updateAllExerciseSets(exercises: Exercise){
+            viewModelScope.launch {
+                val exercise = exercises.map {  }
+                repository.updateExerciseSet(id, exerciseId, reps, weight)
+            }
+        }
+
+     */
 
     fun deleteExerciseSet(exerciseSet: ExerciseSet) {
         viewModelScope.launch {
             repository.deleteExerciseSet(exerciseSet)
         }
     }
-
 
 
 }
