@@ -2,6 +2,7 @@ package edu.cc231030.MC.project.ui.theme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -55,6 +56,7 @@ fun ExerciseItem(
     screen: String
 ) {
 
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,6 +86,8 @@ fun ExerciseItem(
                     val setWeight = remember { mutableStateOf(set.weight.toString()) }
 // checkbox state
                     var checked by remember { mutableStateOf(false) }
+                    val openTimer = remember { mutableStateOf(false) }
+
 
 
                     Box(
@@ -126,16 +130,27 @@ fun ExerciseItem(
                                     )
                                 }
                                 if (screen != "exercise") {
-                                    Checkbox( modifier = Modifier.padding(10.dp),
+                                    Checkbox(modifier = Modifier.padding(10.dp),
                                         checked = checked,
                                         onCheckedChange = { newCheckedState ->
                                             checked = newCheckedState
+                                            if(checked) {
+                                                openTimer.value = true
+                                            }
                                             val repsInt = setReps.value.toIntOrNull() ?: 0
                                             val weightInt = setWeight.value.toIntOrNull() ?: 0
                                             onUpdateSet(set.id, set.exerciseId, repsInt, weightInt)
                                         }
+
                                     )
                                 }
+                                // close timer tab
+                                if (openTimer.value) {
+                                    TimerPopUp(
+                                        onDismissRequest = { openTimer.value = false },
+                                    )
+                                }
+
                                 /* old update button
                                 Button(
                                     onClick = {
