@@ -21,6 +21,7 @@ import edu.cc231030.MC.project.ui.theme.SessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionIdScreen
 import edu.cc231030.MC.project.ui.theme.AddSessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionAddExercise
+import edu.cc231030.MC.project.ui.theme.SessionTimer
 import edu.cc231030.MC.project.ui.theme.topAppBar
 
 
@@ -75,7 +76,6 @@ fun TrainingApp(modifier: Modifier = Modifier) {
                 val sessionId = it.arguments?.getString("sessionId")
             SessionAddExercise(modifier=Modifier, navController = navController, exerciseRepository = exerciseRepository, sessionId = sessionId)
             }
-
         }
     }
 }

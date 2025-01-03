@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
@@ -29,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,6 +40,9 @@ import edu.cc231030.MC.project.data.Exercise
 import edu.cc231030.MC.project.data.ExerciseSet
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrownLight
+import edu.cc231030.MC.project.ui.theme.style.ExerciseSetBackground
 import edu.cc231030.MC.project.ui.theme.style.Purple40
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.theme.style.paddingExercise
@@ -68,16 +74,29 @@ fun ExerciseItem(
             text = exercise.name, modifier = Modifier.weight(1f),
             color = Color.Black,
         )
-        Button(onClick = { onDelete(exercise) }) {
+        Button(onClick = { onDelete(exercise) },
+            colors = ButtonDefaults.buttonColors(containerColor = ButtonBrownLight),
+        ) {
             Text(text = "Delete")
         }
     }
     Column {
-        OutlinedCard(
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(paddingExercise)
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Text("Reps")
+                Text("Weight")
+                if (screen != "exercise") {
+                    Text("Done")
+                }
+                Text("Delete")
+            }
             if (exerciseSet.isNotEmpty()) {
                 // display the sets of the exercise
                 exerciseSet.forEach { set ->
@@ -94,18 +113,16 @@ fun ExerciseItem(
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(1.dp, Color.Gray)
-                            .padding(paddingExercise)
+                            .background(color = ExerciseSetBackground)
+
                     ) {
                         Column {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceAround
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Column {
-                                    Text(
-                                        text = "Reps",
-                                        textAlign = TextAlign.Center
-                                    )
+                                Column (modifier = Modifier.padding(start = 8.dp)){
                                     StyledTextField(
                                         value = setReps.value,
                                         onValueChange = { newReps -> setReps.value = newReps },
@@ -114,11 +131,7 @@ fun ExerciseItem(
                                         extra = "x"
                                     )
                                 }
-                                Column {
-                                    Text(
-                                        text = "Weight",
-                                        textAlign = TextAlign.Center,
-                                    )
+                                Column(modifier = Modifier.padding(start = 14.dp)) {
                                     StyledTextField(
                                         value = setWeight.value,
                                         onValueChange = { newWeight ->
@@ -129,20 +142,28 @@ fun ExerciseItem(
                                         extra = "kg"
                                     )
                                 }
+                                //checkbox
                                 if (screen != "exercise") {
-                                    Checkbox(modifier = Modifier.padding(10.dp),
-                                        checked = checked,
-                                        onCheckedChange = { newCheckedState ->
-                                            checked = newCheckedState
-                                            if(checked) {
-                                                openTimer.value = true
+                                    Column (modifier = Modifier.padding(start = 10.dp)){
+                                        Checkbox(modifier = Modifier,
+                                            checked = checked,
+                                            onCheckedChange = { newCheckedState ->
+                                                checked = newCheckedState
+                                                if (checked) {
+                                                    openTimer.value = true
+                                                }
+                                                val repsInt = setReps.value.toIntOrNull() ?: 0
+                                                val weightInt = setWeight.value.toIntOrNull() ?: 0
+                                                onUpdateSet(
+                                                    set.id,
+                                                    set.exerciseId,
+                                                    repsInt,
+                                                    weightInt
+                                                )
                                             }
-                                            val repsInt = setReps.value.toIntOrNull() ?: 0
-                                            val weightInt = setWeight.value.toIntOrNull() ?: 0
-                                            onUpdateSet(set.id, set.exerciseId, repsInt, weightInt)
-                                        }
 
-                                    )
+                                        )
+                                    }
                                 }
                                 // close timer tab
                                 if (openTimer.value) {
@@ -150,25 +171,12 @@ fun ExerciseItem(
                                         onDismissRequest = { openTimer.value = false },
                                     )
                                 }
-
-                                /* old update button
-                                Button(
-                                    onClick = {
-                                        // convert reps and weight to Int or Null
-                                        val repsInt = setReps.value.toIntOrNull() ?: 0
-                                        val weightInt = setWeight.value.toIntOrNull() ?: 0
-                                        onUpdateSet(set.id, set.exerciseId, repsInt, weightInt)
-                                    }, modifier = Modifier.padding(paddingButton)
-
-                                ) {
-                                    Text(text = "Save")
-                                }
-
-                                 */
                                 Button(
                                     onClick = { onDeleteSet(set) },
-                                    modifier = Modifier.padding(paddingButton)
-                                ) {
+                                    modifier = Modifier.padding(start = 16.dp, top = 12.dp, bottom = 12.dp),
+                                    colors = ButtonDefaults.buttonColors(containerColor = ButtonBrownLight),
+
+                                    ) {
                                     Text(text = "X")
                                 }
                             }
@@ -188,6 +196,7 @@ fun ExerciseItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(paddingButton),
+                colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
                 onClick = { onAddSet(exercise.id, 0, 0) }
             ) {
                 Text(text = "Add Set")

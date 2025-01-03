@@ -10,6 +10,8 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.data.Session
 import edu.cc231030.MC.project.ui.States.SessionsUiState
 import edu.cc231030.MC.project.ui.States.currentSessionUiState
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 
 
@@ -20,6 +22,13 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
 
     private val _currentSession = MutableStateFlow(currentSessionUiState())
     val currentSession = _currentSession.asStateFlow()
+
+    private val _sessionTime = MutableStateFlow(0)
+    val sessionTime = _sessionTime.asStateFlow()
+
+
+    // job is a coroutine job - dk how to explain it better rn
+    private var timerJob: Job? = null
 
 
     init {
@@ -87,4 +96,19 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
             _currentSession.update{ it.copy(currentSession = newSession) }
         }
     }
+
+    fun startTimer() {
+        timerJob?.cancel() // Cancel any existing timer
+        timerJob = viewModelScope.launch {
+            while (true) {
+                delay(1000) // Delay for 1 second
+                _sessionTime.value++ // Increment time
+            }
+        }
+    }
+
+    fun stopTimer() {
+        timerJob?.cancel() // Stops the timer
+    }
 }
+

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 
 @Composable
@@ -35,8 +37,6 @@ fun AddExerciseScreen(
 
     Column() {
         topAppBar("Add New Exercise", navController = navController, "no")
-
-        Text(text = "Add New Exercise")
 
         OutlinedTextField(
             value = exerciseName.value,
@@ -62,6 +62,7 @@ fun AddExerciseScreen(
                     navController.popBackStack()
                 }
             },
+            colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
             modifier = Modifier.padding(paddingButton)
                 .fillMaxWidth()
         ) {
@@ -71,6 +72,7 @@ fun AddExerciseScreen(
             onClick = {
                 navController.navigateUp()
             },
+
             modifier = Modifier.padding(paddingButton)
                 .fillMaxWidth()
         ) {

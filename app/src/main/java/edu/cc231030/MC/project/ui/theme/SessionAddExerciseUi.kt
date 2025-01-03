@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -22,6 +23,8 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
+import edu.cc231030.MC.project.ui.theme.style.ExerciseItemBackground
 import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
@@ -56,7 +59,6 @@ fun SessionAddExercise(
     Column() {
         topAppBar("Add new Exercise", navController = navController, "no")
 
-        Text(text = "Session ID: $sessionId")
         if (exercisesState.exercises.isEmpty()) {
             Text(text = "No exercises available")
         } else {
@@ -67,7 +69,7 @@ fun SessionAddExercise(
                             .fillMaxWidth()
                             .padding(12.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = ItemBackground
+                            containerColor = ExerciseItemBackground
                         )
                     ) {
                         Column {
@@ -108,7 +110,9 @@ fun SessionAddExercise(
             onClick = {
                 navController.navigate("ExerciseScreen")
             },
+            colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
             modifier = Modifier.padding(paddingButton)
+                .fillMaxWidth()
         ) {
             Text("All Exercises")
         }
@@ -117,7 +121,10 @@ fun SessionAddExercise(
             onClick = {
                 navController.navigateUp()
             },
+            colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
+
             modifier = Modifier.padding(paddingButton)
+                .fillMaxWidth()
         ) {
             Text("Back")
         }

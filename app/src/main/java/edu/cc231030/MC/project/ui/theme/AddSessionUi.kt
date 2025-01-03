@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 
 @Composable
@@ -35,8 +37,6 @@ fun AddSessionScreen(
 
     Column {
         topAppBar("Add New Session", navController = navController,"no")
-
-        Text(text = "Add New Session")
 
         OutlinedTextField(
             value = sessionName.value,
@@ -63,6 +63,7 @@ fun AddSessionScreen(
                     navController.navigate("SessionScreen")
                 }
             },
+            colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
             modifier = Modifier.padding(paddingButton)
                 .fillMaxWidth()
         ) {
@@ -72,6 +73,7 @@ fun AddSessionScreen(
             onClick = {
                 navController.navigateUp()
             },
+            colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
             modifier = Modifier.padding(paddingButton)
                 .fillMaxWidth()
 

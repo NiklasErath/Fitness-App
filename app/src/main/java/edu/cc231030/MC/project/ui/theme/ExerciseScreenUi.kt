@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -22,6 +23,8 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
+import edu.cc231030.MC.project.ui.theme.style.ExerciseItemBackground
 import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 
@@ -71,7 +74,7 @@ fun ExerciseScreen(
                             .fillMaxWidth()
                             .padding(10.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = ItemBackground
+                            containerColor = ExerciseItemBackground
                         )
                     ) {
                         ExerciseItem(
@@ -123,6 +126,7 @@ fun ExerciseScreen(
                         navController.navigate("SessionScreen")
                         //      viewModel.onAddButtonClicked()
                     },
+                    colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
                     modifier = Modifier
                         .padding(paddingButton)
                         .fillMaxWidth()

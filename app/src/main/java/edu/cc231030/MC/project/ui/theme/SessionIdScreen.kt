@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -14,8 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,10 +30,15 @@ import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrownLight
+import edu.cc231030.MC.project.ui.theme.style.ExerciseItemBackground
 import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
+import kotlinx.coroutines.time.delay
+import java.time.Duration
 
 
 @Composable
@@ -69,14 +79,22 @@ fun SessionIdScreen(
         )
     )
     exerciseViewModel.getExerciseById(currentSession.exercises)
+    viewModel.startTimer()
 
     // get the session by the id when open the screen
     LaunchedEffect(sessionId) {
         viewModel.getSessionById(sessionIdInt)
     }
     Column {
-        topAppBar(currentSession.name, navController = navController, navigation = "sessionAddExercise/${sessionId}")
+        topAppBar(
+            currentSession.name,
+            navController = navController,
+            navigation = "sessionAddExercise/${sessionId}"
+        )
         LazyColumn {
+            item {
+                SessionTimer(exerciseRepository)
+            }
             if (exercisesState.exercises.isEmpty()) {
                 item { Text(text = "No exercises available", modifier = modifier) }
             } else {
@@ -92,7 +110,7 @@ fun SessionIdScreen(
                             .fillMaxWidth()
                             .padding(10.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = ItemBackground
+                            containerColor = ExerciseItemBackground
                         )
                     ) {
                         ExerciseItem(
@@ -129,44 +147,54 @@ fun SessionIdScreen(
                     }
                 }
             }
+            /*   item {
+                   Button(
+                       onClick = {
+                           navController.navigate("sessionAddExercise/${sessionId}")
+                       },
+                       colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
+                       modifier = Modifier
+                           .padding(paddingButton)
+                           .fillMaxWidth()
+                   ) {
+                       Text("Add Exercises")
+                   }
+               }
+
+             */
+
             item {
                 Button(
                     onClick = {
-                        navController.navigate("sessionAddExercise/${sessionId}")
+                        Log.d("set", "hey $exercisesState")
+                        viewModel.stopTimer()
+                        exercisesState.exercises.map { exercise ->
+                            exerciseViewModel.getSetForExerciseId(exercise.id)
+                        }
+                        navController.navigateUp()
                     },
-                    modifier = Modifier.padding(paddingButton)
+                    colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
+                    modifier = Modifier
+                        .padding(paddingButton)
                         .fillMaxWidth()
                 ) {
-                    Text("Add Exercises")
+                    Text("Finish Workout")
+
                 }
             }
-
             item {
                 Button(
                     onClick = {
                         viewModel.deleteSession(sessionIdInt)
                         navController.navigate("SessionScreen")
                     },
-                    modifier = Modifier.padding(paddingButton)
+                    modifier = Modifier
+                        .padding(paddingButton)
                         .fillMaxWidth(),
-                ) {
-                    Text("Delete Session")
+                    colors = ButtonDefaults.buttonColors(containerColor = ButtonBrownLight),
 
-                }
-            }
-            item {
-                Button(
-                    onClick = {
-                        Log.d("set", "hey $exercisesState")
-                        exercisesState.exercises.map { exercise ->
-                            exerciseViewModel.getSetForExerciseId(exercise.id)
-                        }
-                        navController.navigateUp()
-                    },
-                    modifier = Modifier.padding(paddingButton)
-                        .fillMaxWidth()
-                ) {
-                    Text("Finish Workout")
+                    ) {
+                    Text("Delete Session")
 
                 }
             }

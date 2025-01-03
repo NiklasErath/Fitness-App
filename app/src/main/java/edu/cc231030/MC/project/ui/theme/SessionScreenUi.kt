@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -25,12 +27,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.States.SessionsUiState
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrownLight
+import edu.cc231030.MC.project.ui.theme.style.ButtonRed
+import edu.cc231030.MC.project.ui.theme.style.ExerciseItemBackground
 import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.theme.style.paddingScreen
@@ -87,7 +94,7 @@ fun SessionScreen(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             colors = CardDefaults.cardColors(
-                                containerColor = ItemBackground
+                                containerColor = ExerciseItemBackground
                             )
                             /*   onClick = {
                                    navController.navigate("SessionIdScreen/${session.id}")
@@ -109,6 +116,7 @@ fun SessionScreen(
                                         onClick = {
                                             navController.navigate("SessionIdScreen/${session.id}")
                                         },
+                                        colors = ButtonDefaults.buttonColors(containerColor = ButtonRed),
                                         modifier = Modifier.padding(paddingButton)
                                     ) {
                                         Text("Start")
@@ -142,6 +150,7 @@ fun SessionScreen(
                 item {
                     Button(
                         modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
                         onClick = {
                             navController.navigate("exerciseScreen")
                         },
@@ -152,6 +161,7 @@ fun SessionScreen(
                 item {
                     Button(
                         modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(containerColor = ButtonBrownLight),
                         onClick = {
                             openTimer.value = true
                         }

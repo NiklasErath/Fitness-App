@@ -11,3 +11,12 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val ItemBackground = Color(0xFFA0B8C8)
+
+
+// color palette 1 *********************************
+val ButtonBrown = Color(0xFF482F2D)
+val ButtonBrownLight = Color(0xFF908584)
+val ButtonRed = Color(0xFFE73725)
+
+val ExerciseItemBackground = Color (0xFF767676)
+val ExerciseSetBackground = Color(0xFFA1A1A1)

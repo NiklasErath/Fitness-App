@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,6 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
+import edu.cc231030.MC.project.ui.theme.style.ButtonBrownLight
 import kotlinx.coroutines.time.delay
 import java.time.Duration
 
@@ -90,8 +93,9 @@ fun TimerPopUp(onDismissRequest: () -> Unit) {
                     }
                     Button(
                         onClick = { onDismissRequest() },
-                        modifier = Modifier.fillMaxWidth(0.8f) // Optional: width is 80% of card width
-                    ) {
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
+                        ) {
                         if (time != 0) {
                             Text(text = "Skip")
                         } else {
