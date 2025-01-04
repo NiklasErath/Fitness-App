@@ -47,16 +47,19 @@ fun StyledTextField(
                 .width(textFieldWidth)
                 .height(textFieldHeight)
                 .background(Color.White)
-                .drawBehind {
-                    val strokeWidth = 2.dp.toPx()
-                    val y = size.height + 10 - strokeWidth / 2 // Position of the underline
-                    drawLine(
-                        color = Color.Black, // Color of the underline
-                        start = androidx.compose.ui.geometry.Offset(0f, y),
-                        end = androidx.compose.ui.geometry.Offset(size.width, y),
-                        strokeWidth = strokeWidth
-                    )
-                },
+                .then(
+                    // only draw an underline when readonly is false
+                    if (!readonly) Modifier.drawBehind {
+                        val strokeWidth = 2.dp.toPx()
+                        val y = size.height + 10 - strokeWidth / 2
+                        drawLine(
+                            color = Color.Black,
+                            start = androidx.compose.ui.geometry.Offset(0f, y),
+                            end = androidx.compose.ui.geometry.Offset(size.width, y),
+                            strokeWidth = strokeWidth
+                        )
+                    } else Modifier
+                ),
             readOnly = readonly,
         )
 

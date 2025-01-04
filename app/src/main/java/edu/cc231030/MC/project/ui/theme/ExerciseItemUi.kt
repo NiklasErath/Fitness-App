@@ -145,10 +145,12 @@ fun ExerciseItem(
             if (exerciseSet.isNotEmpty()) {
                 // display the sets of the exercise
                 exerciseSet.forEach { set ->
-                    // individual states for each set - reps and weight
-                    val setReps = remember { mutableStateOf(set.reps.toString()) }
-                    val setWeight = remember { mutableStateOf(set.weight.toString()) }
-                    // checkbox state
+
+                    // individual states for each set - reps and weight -- id is a primary key
+                    val setReps = remember(set.id) { mutableStateOf(set.reps.toString()) }
+                    val setWeight = remember(set.id) { mutableStateOf(set.weight.toString()) }
+
+                    // checkbox state and timer
                     var checked by remember { mutableStateOf(false) }
                     val openTimer = remember { mutableStateOf(false) }
 
@@ -175,7 +177,7 @@ fun ExerciseItem(
                                                 label = "${set.reps} x",
                                                 modifier = Modifier,
                                                 extra = "x",
-                                                readonly = true,
+                                                readonly = true
                                             )
                                         } else {
                                             StyledTextField(
@@ -186,7 +188,7 @@ fun ExerciseItem(
                                                 label = "${set.reps} x",
                                                 modifier = Modifier,
                                                 extra = "x",
-                                                readonly = false,
+                                                readonly = false
                                             )
                                         }
                                     }
@@ -200,7 +202,7 @@ fun ExerciseItem(
                                             label = "${set.weight} kg",
                                             modifier = Modifier,
                                             extra = "kg",
-                                            readonly = true,
+                                            readonly = true
                                         )
                                         } else {
                                             StyledTextField(
