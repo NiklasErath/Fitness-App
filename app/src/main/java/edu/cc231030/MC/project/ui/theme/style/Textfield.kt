@@ -28,7 +28,8 @@ fun StyledTextField(
     onValueChange: (String) -> Unit,
     label: String,
     modifier: Modifier = Modifier,
-    extra: String
+    extra: String,
+    readonly: Boolean
 ) {
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -56,11 +57,13 @@ fun StyledTextField(
                         strokeWidth = strokeWidth
                     )
                 },
+            readOnly = readonly,
         )
 
-        Text(modifier = Modifier
-            .align(alignment = Alignment.Bottom)
-            .padding(start = 4.dp),
+        Text(
+            modifier = Modifier
+                .align(alignment = Alignment.Bottom)
+                .padding(start = 4.dp),
             text = extra,
             style = TextStyle(color = Color.Black)
         )

@@ -10,7 +10,7 @@ import edu.cc231030.MC.project.data.db.Entities.ExerciseSetEntity
 import edu.cc231030.MC.project.data.db.Entities.SessionEntity
 import kotlinx.coroutines.flow.Flow
 
-//Data Access object
+//Data Access object with SQL operations/functions
 
 @Dao
 interface ExerciseDao {
@@ -27,19 +27,13 @@ interface ExerciseDao {
     @Query("SELECT * FROM exercises WHERE id = :id")
     suspend fun getExerciseById(id: Int): ExerciseEntity
 
-    /*
-        @Query("SELECT * FROM exerciseSets WHERE exerciseId = :exerciseId")
-        fun getSetsForExercise(exerciseId: Int): Flow<List<ExerciseSetEntity>>
-    */
+    @Update
+    suspend fun updateExercise(exerciseEntity: ExerciseEntity)
 
-
-    //***********************************************************
+    //*********************************************************** SETS
 
     @Query("SELECT * FROM exerciseSets")
     fun getSetsForExercise(): Flow<List<ExerciseSetEntity>>
-
-    @Query("SELECT * FROM exerciseSets WHERE exerciseId = :id")
-    suspend fun getSetForExerciseId(id: Int): ExerciseSetEntity
 
     @Insert
     suspend fun addExerciseSet(exerciseSetEntity: ExerciseSetEntity)
@@ -48,15 +42,15 @@ interface ExerciseDao {
     suspend fun deleteExerciseSet(exerciseSetEntity: ExerciseSetEntity)
 
     @Update
-    suspend fun  updateExerciseSet(exerciseSetEntity: ExerciseSetEntity)
+    suspend fun updateExerciseSet(exerciseSetEntity: ExerciseSetEntity)
 
-    //***********************************************************
+    //*********************************************************** SESSION
 
     @Insert
     suspend fun addSession(sessionEntity: SessionEntity)
 
     @Delete
-    suspend fun  deleteSession(sessionEntity: SessionEntity)
+    suspend fun deleteSession(sessionEntity: SessionEntity)
 
     @Query("SELECT * FROM sessions")
     fun getAllSessions(): Flow<List<SessionEntity>>

@@ -9,9 +9,9 @@ import edu.cc231030.MC.project.data.db.Entities.ExerciseEntity
 import edu.cc231030.MC.project.data.db.Entities.ExerciseSetEntity
 import edu.cc231030.MC.project.data.db.Entities.SessionEntity
 
-// add here new entities
+// Database
 @Database(entities = [ExerciseEntity::class, ExerciseSetEntity::class, SessionEntity::class], version = 7, exportSchema = false)
-@TypeConverters(Converters::class) // Register your converters here
+@TypeConverters(Converters::class) // update the version after changing something within the database
 abstract class ExerciseDatabase : RoomDatabase() {
 
     abstract fun exerciseDao(): ExerciseDao

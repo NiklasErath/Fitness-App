@@ -10,13 +10,6 @@ import kotlinx.coroutines.flow.map
 
 class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
-
-    val names = listOf(
-        "Training1",
-        "Training2",
-        "Training3"
-    )
-
     // get all exercises
     val exercises: Flow<List<Exercise>> = exerciseDao.findAllExercises()
         .map { list ->
@@ -27,6 +20,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             }
         }
 
+    // get all exerciseSets
     val exerciseSets: Flow<List<ExerciseSet>> = exerciseDao.getSetsForExercise()
         .map { list ->
             Log.d("ExerciseSets", "Fetched sets: $list")  // Log the raw list from the DAO
@@ -37,16 +31,14 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
     // ******************************************** EXERCISE SET
 
-    suspend fun getSetForExerciseId(exerciseId: Int): ExerciseSetEntity {
-        return exerciseDao.getSetForExerciseId(exerciseId)
-    }
-
+    // add a new exerciseSet
     suspend fun addExerciseSet(exerciseId: Int, reps: Int, weight: Int) {
         exerciseDao.addExerciseSet(
             ExerciseSetEntity(0, exerciseId, reps, weight)
         )
     }
 
+    // delete an exerciseSet
     suspend fun deleteExerciseSet(exerciseSet: ExerciseSet) {
         val entity = ExerciseSetEntity(
             id = exerciseSet.id,
@@ -57,6 +49,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         exerciseDao.deleteExerciseSet(entity)
     }
 
+    // update an exercise Set with new data
     suspend fun updateExerciseSet(id: Int, exerciseId: Int, reps: Int, weight: Int) {
         val entity = ExerciseSetEntity(id, exerciseId, reps, weight)
         exerciseDao.updateExerciseSet(entity)
@@ -64,18 +57,20 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
     // ********************************************************************* EXERCISE
 
+    // add/create an exercise
     suspend fun addExercise(name: String, description: String) {
         exerciseDao.addExercise(
             ExerciseEntity(0, name, description)
         )
     }
 
-
+    // delete an exercise
     suspend fun deleteExercise(exercise: Exercise) {
         val entity = ExerciseEntity(id = exercise.id, name = exercise.name, description = exercise.description)
         exerciseDao.deleteExercise(entity)
     }
 
+    // get an exercise by id
     suspend fun getExerciseById(exerciseId: Int): Exercise {
         return exerciseDao.getExerciseById(exerciseId).let { entity ->
             Exercise(
@@ -86,9 +81,15 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         }
     }
 
+    // update an exercise with new information/data
+    suspend fun updateExercise(exerciseEntity: ExerciseEntity){
+        exerciseDao.updateExercise(exerciseEntity)
+    }
+
 
     // ********************************************* SESSION
 
+    // create Flow List with all the sessions
     val sessions: Flow<List<Session>> = exerciseDao.getAllSessions()
         .map { list ->
             list.map { entity ->
@@ -96,18 +97,20 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
             }
         }
 
+    // add/create a Session
     suspend fun addSession(name: String, description: String) {
         exerciseDao.addSession(
             SessionEntity(0, name, emptyList(), description)
         )
     }
 
+    // delete Session
     suspend fun deleteSession(session: Session) {
         val entity = SessionEntity(id = session.id, name = session.name, description = session.description)
         exerciseDao.deleteSession(entity)
     }
 
-
+    // get a Session by id
     suspend fun getSessionById(sessionId: Int): Session {
         return exerciseDao.getSessionById(sessionId).let { entity ->
             Session(
@@ -119,8 +122,9 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         }
     }
 
+    // add an exercise to a session
     suspend fun addExerciseToSession(session: Session, exerciseId: Int) {
-        // make shure an exercise isn't twice in the list
+        // check if an exercise isn't twice in the list
         if (exerciseId !in session.exercises) {
             // update the list of exercises
             val updatedExercises = session.exercises.toMutableList().apply { add(exerciseId) }
@@ -137,6 +141,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         }
     }
 
+    // delete an exercise from a session by id - delete the id out of the array and update the session
     suspend fun deleteExerciseFromSession(session: Session, exerciseId: Int) {
         // make shure an exercise isn't twice in the list
         Log.d("delete", "try to delete $exerciseId in Session $session")

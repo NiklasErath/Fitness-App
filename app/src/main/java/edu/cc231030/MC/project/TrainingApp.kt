@@ -1,18 +1,16 @@
 package edu.cc231030.MC.project.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import edu.cc231030.MC.project.data.Exercise
 import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.data.db.ExerciseDatabase
 import edu.cc231030.MC.project.ui.theme.ExerciseScreen
@@ -21,8 +19,8 @@ import edu.cc231030.MC.project.ui.theme.SessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionIdScreen
 import edu.cc231030.MC.project.ui.theme.AddSessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionAddExercise
-import edu.cc231030.MC.project.ui.theme.SessionTimer
-import edu.cc231030.MC.project.ui.theme.topAppBar
+import edu.cc231030.MC.project.ui.theme.EditExerciseDescription
+import edu.cc231030.MC.project.ui.theme.style.AppBackground
 
 
 enum class Routes(val route: String) {
@@ -31,9 +29,11 @@ enum class Routes(val route: String) {
     Session("SessionIdScreen/{sessionId}"),
     AddSession("addSessionScreen"),
     AddExercise("addExerciseScreen"),
-    SessionAddExercise("SessionAddExercise/{sessionId}")
+    SessionAddExercise("SessionAddExercise/{sessionId}"),
+    EditExerciseDescription("EditExerciseDescription/{exerciseId}")
 }
 
+// App Composable with all the navigation
 @Composable
 fun TrainingApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
@@ -43,7 +43,8 @@ fun TrainingApp(modifier: Modifier = Modifier) {
     val exerciseRepository = ExerciseRepository(dao)
 
     // Box for the padding/modifier from the MainActivity
-    Box(modifier = modifier) {
+    Box(modifier = modifier
+        .background(AppBackground).fillMaxSize()) {
         NavHost(navController = navController, Routes.Home.route) {
             composable(Routes.Exercises.route) {
                 ExerciseScreen(modifier = Modifier, navController = navController, exerciseRepository = exerciseRepository)
@@ -56,6 +57,12 @@ fun TrainingApp(modifier: Modifier = Modifier) {
             }
             composable(Routes.AddSession.route) {
                 AddSessionScreen(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository)
+            }
+            composable(Routes.EditExerciseDescription.route,
+                arguments = listOf(navArgument("exerciseId") {type = NavType.StringType})
+            ){
+                val exerciseId = it.arguments?.getString("exerciseId")
+                EditExerciseDescription(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository, exerciseId = exerciseId)
             }
             composable(
                 Routes.Session.route,

@@ -1,6 +1,5 @@
 package edu.cc231030.MC.project.ui.theme
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -16,11 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,17 +23,14 @@ import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
-import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
-import edu.cc231030.MC.project.ui.theme.style.ButtonBrownLight
+import edu.cc231030.MC.project.ui.theme.style.DeleteLightButton
 import edu.cc231030.MC.project.ui.theme.style.ExerciseItemBackground
-import edu.cc231030.MC.project.ui.theme.style.ItemBackground
+import edu.cc231030.MC.project.ui.theme.style.InteractionButton
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
-import kotlinx.coroutines.time.delay
-import java.time.Duration
 
-
+// specific session screen
 @Composable
 fun SessionIdScreen(
     modifier: Modifier = Modifier,
@@ -49,7 +39,7 @@ fun SessionIdScreen(
     sessionId: String?
 ) {
 
-    // String? back to an Int or 0
+    // sessionId to Int
     val sessionIdInt = sessionId?.toIntOrNull() ?: 0
 
     val viewModel: SessionsViewModel = viewModel(
@@ -65,28 +55,35 @@ fun SessionIdScreen(
     )
 
 
+    // collect exercise sets
     val exerciseSet by exerciseSetViewModel.exerciseSets.collectAsState(
         initial = ExerciseSetsUiState(
             emptyList()
         )
     )
 
+    // store the current session information
     val sessionState = viewModel.currentSession.collectAsState()
     val currentSession = sessionState.value.currentSession
+
     val exercisesState by exerciseViewModel.exercises.collectAsState(
         initial = ExercisesUiState(
             emptyList()
         )
     )
-    exerciseViewModel.getExerciseById(currentSession.exercises)
+
+    exerciseViewModel.getExercisesById(currentSession.exercises)
+    // start timer when starting a workout
     viewModel.startTimer()
 
     // get the session by the id when open the screen
     LaunchedEffect(sessionId) {
         viewModel.getSessionById(sessionIdInt)
     }
+
+
     Column {
-        topAppBar(
+        TopAppBar(
             currentSession.name,
             navController = navController,
             navigation = "sessionAddExercise/${sessionId}"
@@ -142,38 +139,20 @@ fun SessionIdScreen(
                                     weight
                                 )
                             },
-                            screen = "session"
+                            screen = "session",
+                            navController = navController
                         )
                     }
                 }
             }
-            /*   item {
-                   Button(
-                       onClick = {
-                           navController.navigate("sessionAddExercise/${sessionId}")
-                       },
-                       colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
-                       modifier = Modifier
-                           .padding(paddingButton)
-                           .fillMaxWidth()
-                   ) {
-                       Text("Add Exercises")
-                   }
-               }
-
-             */
-
+            // finish the Workout and stop the timer
             item {
                 Button(
                     onClick = {
-                        Log.d("set", "hey $exercisesState")
                         viewModel.stopTimer()
-                        exercisesState.exercises.map { exercise ->
-                            exerciseViewModel.getSetForExerciseId(exercise.id)
-                        }
                         navController.navigateUp()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
+                    colors = ButtonDefaults.buttonColors(containerColor = InteractionButton),
                     modifier = Modifier
                         .padding(paddingButton)
                         .fillMaxWidth()
@@ -182,6 +161,7 @@ fun SessionIdScreen(
 
                 }
             }
+            // delete the current session
             item {
                 Button(
                     onClick = {
@@ -191,7 +171,7 @@ fun SessionIdScreen(
                     modifier = Modifier
                         .padding(paddingButton)
                         .fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonBrownLight),
+                    colors = ButtonDefaults.buttonColors(containerColor = DeleteLightButton),
 
                     ) {
                     Text("Delete Session")

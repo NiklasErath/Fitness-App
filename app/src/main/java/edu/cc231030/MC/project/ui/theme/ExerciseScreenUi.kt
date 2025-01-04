@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -16,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -23,12 +25,11 @@ import edu.cc231030.MC.project.data.ExerciseRepository
 import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
-import edu.cc231030.MC.project.ui.theme.style.ButtonBrown
+import edu.cc231030.MC.project.ui.theme.style.InteractionButton
 import edu.cc231030.MC.project.ui.theme.style.ExerciseItemBackground
-import edu.cc231030.MC.project.ui.theme.style.ItemBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 
-// Ui for the Main Screen
+// Exercise Screen to display all the exercises
 @Composable
 fun ExerciseScreen(
     modifier: Modifier = Modifier,
@@ -40,12 +41,14 @@ fun ExerciseScreen(
         factory = ExerciseViewModelFactory(exerciseRepository)
     )
 
+    // collect and state exercise information
     val exercisesState by viewModel.exercises.collectAsState(
         initial = ExercisesUiState(
             emptyList()
         )
     )
 
+    // collect and state exerciseSets information
     val exerciseSet by viewModel.exerciseSets.collectAsState(
         initial = ExerciseSetsUiState(
             emptyList()
@@ -54,7 +57,7 @@ fun ExerciseScreen(
 
 
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        topAppBar("Exercises", navController = navController, "addExerciseScreen")
+        TopAppBar("Exercises", navController = navController, "addExerciseScreen")
         LazyColumn {
 
             // Display exercises
@@ -72,11 +75,14 @@ fun ExerciseScreen(
                     OutlinedCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(10.dp),
+                            .padding(10.dp)
+                            .shadow(5.dp, shape = RoundedCornerShape(12.dp)),
+                        shape = RoundedCornerShape(12.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = ExerciseItemBackground
                         )
                     ) {
+                        // Exercise Item for each exercise
                         ExerciseItem(
                             exercise = exercise,
                             exerciseSet = correspondingExerciseSets,
@@ -97,36 +103,19 @@ fun ExerciseScreen(
                                     weight
                                 )
                             },
-                            screen = "exercise"
+                            screen = "exercise",
+                            navController = navController
                         )
                     }
                 }
             }
-            /*
-            item {
-                Button(
-                    onClick = {
-                        navController.navigate("addExerciseScreen")
-                        //  viewModel.onAddButtonClicked()
-                    },
-                    modifier = Modifier
-                        .padding(paddingButton)
-                        .fillMaxWidth()
-
-                ) {
-                    Text("Add new Exercise!")
-                }
-
-            }
-
-             */
             item {
                 Button(
                     onClick = {
                         navController.navigate("SessionScreen")
                         //      viewModel.onAddButtonClicked()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonBrown),
+                    colors = ButtonDefaults.buttonColors(containerColor = InteractionButton),
                     modifier = Modifier
                         .padding(paddingButton)
                         .fillMaxWidth()
