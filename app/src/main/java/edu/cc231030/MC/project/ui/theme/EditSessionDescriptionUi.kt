@@ -1,5 +1,6 @@
 package edu.cc231030.MC.project.ui.theme
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,48 +20,48 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import edu.cc231030.MC.project.data.ExerciseRepository
-import edu.cc231030.MC.project.ui.ExerciseViewModelFactory
+import edu.cc231030.MC.project.ui.SessionViewModelFactory
 import edu.cc231030.MC.project.ui.theme.style.InteractionButton
 import edu.cc231030.MC.project.ui.theme.style.InteractionLightButton
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
-import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
+import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 
-// Screen to edit the Description of an exercise
+// Screen to edit the Description of a session
 @Composable
-fun EditExerciseDescription(
+fun EditSessionDescription(
     modifier: Modifier = Modifier,
     navController: NavController,
     exerciseRepository: ExerciseRepository,
-    exerciseId: String?
+    sessionId: String?
 ) {
 
-    // exerciseId to Int
-    val exerciseIdInt = exerciseId?.toIntOrNull() ?: 0
+    // sessionId to Int
+    val sessionIdInt = sessionId?.toIntOrNull() ?: 0
 
 
-    val viewModel: ExerciseViewModel = viewModel(
-        factory = ExerciseViewModelFactory(exerciseRepository)
+    val viewModel: SessionsViewModel = viewModel(
+        factory = SessionViewModelFactory(exerciseRepository)
     )
 
-    // state the information of the current exercise that gets edited
-    val exerciseState = viewModel.currentExercise.collectAsState()
-    val currentExercise = exerciseState.value.currentExercise
+    // state the information of the current session that gets edited
+    val sessionState = viewModel.currentSession.collectAsState()
+    val currentSession = sessionState.value.currentSession
 
     // remember the description for the textfield
-    val exerciseDescription = remember { mutableStateOf("") }
+    val sessionDescription = remember { mutableStateOf("") }
 
-    //  on launch get the exercise information by the id and store the description in the state
-    LaunchedEffect(exerciseIdInt, currentExercise.description) {
-        viewModel.getExerciseById(exerciseId = exerciseIdInt)
-        exerciseDescription.value = currentExercise.description
+    //  on launch get the session information by the id and store the description in the state
+    LaunchedEffect(sessionIdInt, currentSession.description) {
+        viewModel.getSessionById(sessionId = sessionIdInt)
+        sessionDescription.value = currentSession.description
     }
 
     Column {
         TopAppBar("Edit Description", navController = navController, navigation = "no")
-
+        Text(text=currentSession.name)
         OutlinedTextField(
-            value = exerciseDescription.value,
-            onValueChange = { newDescription -> exerciseDescription.value = newDescription },
+            value = sessionDescription.value,
+            onValueChange = { newDescription -> sessionDescription.value = newDescription },
             label = { Text("") },
             modifier = Modifier
                 .padding(12.dp)
@@ -74,11 +75,11 @@ fun EditExerciseDescription(
 
         Button(
             onClick = {
-                if (exerciseDescription.value.isNotEmpty()) {
-                    //pass the name and description to the function to update the exercise
-                    viewModel.updateExercise(currentExercise.id, currentExercise.name, exerciseDescription.value)
-                    //navigate back to Exercise Screen
-                    navController.navigate("ExerciseScreen")
+                if (sessionDescription.value.isNotEmpty()) {
+                    //pass the name, exercises and description to the function to update the session
+                    viewModel.updateSession(currentSession.id, currentSession.name, currentSession.exercises,sessionDescription.value)
+                    //navigate back to Session Screen
+                    navController.navigateUp()
                 }
             },
             colors = ButtonDefaults.buttonColors(containerColor = InteractionButton),

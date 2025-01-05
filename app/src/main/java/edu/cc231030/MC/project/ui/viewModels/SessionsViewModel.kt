@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import edu.cc231030.MC.project.data.ExerciseRepository
+import edu.cc231030.MC.project.data.db.Entities.ExerciseEntity
+import edu.cc231030.MC.project.data.db.Entities.SessionEntity
 import edu.cc231030.MC.project.ui.States.SessionsUiState
 import edu.cc231030.MC.project.ui.States.CurrentSessionUiState
 import kotlinx.coroutines.Job
@@ -69,6 +71,14 @@ class SessionsViewModel(private val repository: ExerciseRepository) : ViewModel(
         viewModelScope.launch {
             val session = repository.getSessionById(sessionId)
             repository.deleteSession(session)
+        }
+    }
+
+    // update a session
+    fun updateSession(id:Int, name: String, exercises: List<Int>, description: String) {
+        val entity = SessionEntity(id = id, name = name, exercises =  exercises, description= description)
+        viewModelScope.launch {
+            repository.updateSession(entity)
         }
     }
 

@@ -1,5 +1,6 @@
 package edu.cc231030.MC.project.ui
 
+import android.media.metrics.EditingSession
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import edu.cc231030.MC.project.ui.theme.SessionIdScreen
 import edu.cc231030.MC.project.ui.theme.AddSessionScreen
 import edu.cc231030.MC.project.ui.theme.SessionAddExercise
 import edu.cc231030.MC.project.ui.theme.EditExerciseDescription
+import edu.cc231030.MC.project.ui.theme.EditSessionDescription
 import edu.cc231030.MC.project.ui.theme.style.AppBackground
 
 
@@ -30,7 +32,10 @@ enum class Routes(val route: String) {
     AddSession("addSessionScreen"),
     AddExercise("addExerciseScreen"),
     SessionAddExercise("SessionAddExercise/{sessionId}"),
-    EditExerciseDescription("EditExerciseDescription/{exerciseId}")
+    EditExerciseDescription("EditExerciseDescription/{exerciseId}"),
+    EditSessionDescription("EditSessionDescription/{sessionId}")
+
+
 }
 
 // App Composable with all the navigation
@@ -63,6 +68,12 @@ fun TrainingApp(modifier: Modifier = Modifier) {
             ){
                 val exerciseId = it.arguments?.getString("exerciseId")
                 EditExerciseDescription(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository, exerciseId = exerciseId)
+            }
+            composable(Routes.EditSessionDescription.route,
+                arguments = listOf(navArgument("sessionId") {type = NavType.StringType})
+            ){
+                val sessionId = it.arguments?.getString("sessionId")
+                EditSessionDescription(modifier = modifier, navController = navController, exerciseRepository = exerciseRepository, sessionId = sessionId)
             }
             composable(
                 Routes.Session.route,

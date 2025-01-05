@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -76,7 +77,7 @@ fun ExerciseItem(
             )
             Button(
                 onClick = { onDelete(exercise) },
-                colors = ButtonDefaults.buttonColors(containerColor = DeleteLightButton),
+                colors = ButtonDefaults.buttonColors(containerColor = InteractionLightButton),
             ) {
                 Text(text = "Delete")
             }

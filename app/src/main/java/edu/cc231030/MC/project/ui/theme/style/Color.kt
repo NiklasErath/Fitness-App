@@ -20,11 +20,11 @@ val ItemBackground = Color(0xFFA0B8C8)
 
 val InteractionButton = Color(0xFF482F23)
 val InteractionHighlightButton = Color(0xFFE73725)
-val InteractionLightButton = Color(0xFFDC5143)
+val InteractionLightButton = Color(0xFF774630)
 val AddButton = Color(0xFFFF3F0A)
 
-val DeleteButton = Color(0xFF9A403B)
-val DeleteLightButton = Color(0xFF965F5C)
+val DeleteButton = Color(0xFFFF4A45)
+val DeleteLightButton = Color(0xA3764530)
 
 val CheckBoxColor = Color(0xFF008613)
 

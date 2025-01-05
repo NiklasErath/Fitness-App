@@ -104,6 +104,11 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         )
     }
 
+    // update an exercise with new information/data
+    suspend fun updateSession(sessionEntity: SessionEntity){
+        exerciseDao.updateSession(sessionEntity)
+    }
+
     // delete Session
     suspend fun deleteSession(session: Session) {
         val entity = SessionEntity(id = session.id, name = session.name, description = session.description)

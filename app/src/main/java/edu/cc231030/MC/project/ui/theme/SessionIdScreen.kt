@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -15,6 +16,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -25,7 +28,9 @@ import edu.cc231030.MC.project.ui.States.ExerciseSetsUiState
 import edu.cc231030.MC.project.ui.States.ExercisesUiState
 import edu.cc231030.MC.project.ui.theme.style.DeleteLightButton
 import edu.cc231030.MC.project.ui.theme.style.ExerciseItemBackground
-import edu.cc231030.MC.project.ui.theme.style.InteractionButton
+import edu.cc231030.MC.project.ui.theme.style.InteractionHighlightButton
+import edu.cc231030.MC.project.ui.theme.style.InteractionLightButton
+import edu.cc231030.MC.project.ui.theme.style.SessionBackground
 import edu.cc231030.MC.project.ui.theme.style.paddingButton
 import edu.cc231030.MC.project.ui.viewModels.SessionsViewModel
 import edu.cc231030.MC.project.ui.viewModels.ExerciseViewModel
@@ -145,6 +150,41 @@ fun SessionIdScreen(
                     }
                 }
             }
+            item {
+                OutlinedCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
+                        .shadow(5.dp, shape = RoundedCornerShape(12.dp)),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.outlinedCardColors(SessionBackground)
+                ) {
+                    Column {
+                        OutlinedCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp, start = 12.dp, end = 12.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(12.dp)) {
+                                Text(text = "Description:", fontWeight = FontWeight.Bold)
+                                Text(text = currentSession.description)
+                            }
+                        }
+                        Button(
+                            onClick = {
+                                navController.navigate("EditSessionDescription/${currentSession.id}")
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(paddingButton),
+                            colors = ButtonDefaults.buttonColors(containerColor = InteractionLightButton),
+                        ) {
+                            Text(text = "Edit Description")
+
+                        }
+                    }
+                }
+            }
             // finish the Workout and stop the timer
             item {
                 Button(
@@ -152,7 +192,7 @@ fun SessionIdScreen(
                         viewModel.stopTimer()
                         navController.navigateUp()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = InteractionButton),
+                    colors = ButtonDefaults.buttonColors(containerColor = InteractionHighlightButton),
                     modifier = Modifier
                         .padding(paddingButton)
                         .fillMaxWidth()
