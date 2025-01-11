@@ -19,12 +19,17 @@ Exercises can be created/edited/deleted on a different Screen where all exercise
 
 User Stories:
 As a user ...
+
 I want to create a new workout session, so that I can organize and track my exercises.
+
 I want to add exercises from a list to my workout session, so that I can track the different activities I
 perform during my workout.
+
 I want to add sets to my exercises with details like ‘reps’ and ‘weight’, so that I can keep detailed
 record of my performance for each exercise.
+
 I want to track my progress during a workout session, so that I can view my performance in real-time
 and make adjustments if needed.
+
 I want to track which exercises I have already done during a workout, so that I have a structured
 workout. 
