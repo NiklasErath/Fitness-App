@@ -1,5 +1,7 @@
 GYMNI
+
 Fitness / Gym App Concept
+
 The idea is to develop a Fitness / Gym App to track all your Workout-sessions.
 
 MVP:
