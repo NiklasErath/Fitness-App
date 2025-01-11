@@ -5,10 +5,14 @@ Fitness / Gym App Concept
 The idea is to develop a Fitness / Gym App to track all your Workout-sessions.
 
 MVP:
+
 The user should be able to create a session and add exercises to it.
+
 Sets can be added to each exercise with ‘reps’ (repetitions) and ‘weight’. Sets can be ‘done’ with a
 checkbox next to it.
+
 Exercises can be created/edited/deleted on a different Screen where all exercises will be displayed.
+
 - create a workout/session
 - add exercises to a workout/session from exercise screen and delete them
 - add/delete exercise to the exercise Screen
