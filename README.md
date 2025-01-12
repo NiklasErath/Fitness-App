@@ -1,5 +1,7 @@
 GYMNI
 
+Download the Repository, open it in Android Studio and launch the App. 
+
 Fitness / Gym App Concept
 
 The idea is to develop a Fitness / Gym App to track all your Workout-sessions.
